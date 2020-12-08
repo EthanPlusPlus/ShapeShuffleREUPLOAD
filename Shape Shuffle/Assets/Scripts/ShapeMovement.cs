@@ -67,13 +67,13 @@ public class ShapeMovement : MonoBehaviour
         }
 
         if(leftSwiped){
-            shapePos.z = shapePos.z + 1.75f;
+            shapePos.z = shapePos.z + 2.75f;
             transform.position = shapePos;
             leftSwiped = false;
         }
         
         if(rightSwiped){
-            shapePos.z = shapePos.z - 1.75f;
+            shapePos.z = shapePos.z - 2.75f;
             transform.position = shapePos;
             rightSwiped = false;
         }
@@ -82,12 +82,12 @@ public class ShapeMovement : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
             if(shapePos.z < 1.75f){
-                shapePos.z = shapePos.z + 1.75f;
+                shapePos.z = shapePos.z + 2.75f;
                 transform.position = shapePos;
             }
         }else if(Input.GetKeyDown(KeyCode.RightArrow)){
             if(shapePos.z > -1.75f){
-                shapePos.z = shapePos.z - 1.75f;
+                shapePos.z = shapePos.z - 2.75f;
                 transform.position = shapePos;
             }
         }
