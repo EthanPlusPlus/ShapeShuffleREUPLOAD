@@ -7,6 +7,7 @@ public class WallManager : MonoBehaviour
     GameManager gm;
     ShapeMovement shapeMovement;
 
+    public List<GameObject> wallShps = new List<GameObject>();
     public GameObject[] walls;
     public GameObject wallParent;
     GameObject correctWall;
@@ -16,7 +17,7 @@ public class WallManager : MonoBehaviour
         shapeMovement = (ShapeMovement)FindObjectOfType(typeof(ShapeMovement));
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
 
-        Spawn(40);
+        Build();
     }
 
     void Update()
@@ -24,7 +25,7 @@ public class WallManager : MonoBehaviour
         
     }
 
-    void Spawn(float dist)    //leftz -21.56 centrez -13.3278 rightz -27.054 filler1 -22.935 filler2 -25.682
+    void Build()    //leftz -21.56 centrez -13.3278 rightz -27.054 filler1 -22.935 filler2 -25.682
     {
         //build wall
         
@@ -41,7 +42,7 @@ public class WallManager : MonoBehaviour
         {
             if(i % 2 == 1){
             
-                int r = Random.Range(0, 3);
+                int r = Random.Range(0, walls.Length-1);
                 zR -= 1.376f;
                 GameObject wallRTemp = Instantiate(walls[r], new Vector3(0,0,zR), Rotate(r));
                 wallRTemp.transform.SetParent(wallParent.transform);
@@ -58,23 +59,49 @@ public class WallManager : MonoBehaviour
         {
             if(i % 2 == 1){
                 
-                int l = Random.Range(0, 3);
+                int l = Random.Range(0, walls.Length-1);
                 zL += 1.375f;
-                //Instantiate(walls[l], new Vector3(0,0,zL), Rotate(l));
                 GameObject wallLTemp = Instantiate(walls[l], new Vector3(0,0,zL), Rotate(l));//Instantiate(walls[walls.Length - 1], new Vector3(0,0,zR), Rotate(100));
                 wallLTemp.transform.SetParent(wallParent.transform);
             
             }else if(i % 2 == 0){
                 zL += 1.375f;
-                //Instantiate(walls[walls.Length - 1], new Vector3(0,0,zL), Rotate(100));
                 GameObject wallLTemp = Instantiate(walls[walls.Length - 1], new Vector3(0,0,zL), Rotate(100));
                 wallLTemp.transform.SetParent(wallParent.transform);
             }
         }
 
-        // spawn new wall
-        //Instantiate(wall, new Vector3(Mathf.Sin(1.308997f) * dist, Mathf.Cos(1.308997f) * -dist + 5.65f, 0), Quaternion.identity);
+        Swop();
 
+        Spawn(35);
+        // spawn new wall
+        
+
+    }
+
+    void Swop()
+    {
+        //fetch childern
+        for (int i = 0; i < 2 * (gm.laneNum) ; i++)
+        {    
+            if(i % 2 == 0 && i != 1){
+                wallShps.Add(wallParent.transform.GetChild(i).gameObject);
+            }
+        }
+        
+        //swop
+        Vector3 cShp;
+        int randShp = Random.Range(0, wallShps.Count - 1);
+
+        cShp = wallShps[0].transform.position;
+        wallShps[0].transform.position = wallShps[randShp].transform.position;
+        wallShps[randShp].transform.position = cShp;
+        print("swopped" + randShp);
+    }
+
+    void Spawn(float dist)
+    {
+        wallParent.transform.position = new Vector3(Mathf.Sin(1.308997f) * dist, Mathf.Cos(1.308997f) * -dist + 5.65f, 0);
     }
 
     Quaternion Rotate(int shpNum)
@@ -89,6 +116,15 @@ public class WallManager : MonoBehaviour
                 rot = Quaternion.Euler(15, 90, 0);
                 break;
             case 2:
+                rot = Quaternion.Euler(15, 90, -90);
+                break;
+            case 3:
+                rot = Quaternion.Euler(15, 90, 0);
+                break;
+            case 4:
+                rot = Quaternion.Euler(15, 90, 0);
+                break;
+            case 5:
                 rot = Quaternion.Euler(15, 90, -90);
                 break;
             default:

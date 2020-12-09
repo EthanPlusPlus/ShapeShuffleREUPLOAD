@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     void ChooseMesh()
     {
-        shpNum = Random.Range(0, 2);
+        shpNum = Random.Range(0, 3);
         shps[shpNum].SetActive(true);
     }
 }
