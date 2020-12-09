@@ -7,11 +7,17 @@ public class GameManager : MonoBehaviour
     public GameObject[] shps;
     GameObject startingShp;
 
-    int levelNum, laneNum;
+    public int shpNum, levelNum, laneNum;
+
+    
+    void Awake()
+    {
+        ChooseMesh();
+    }
 
     void Start()
     {
-        ChooseMesh();
+
     }
 
     void Update()
@@ -26,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     void ChooseMesh()
     {
-        shps[Random.Range(0, 4)].SetActive(true);
+        shpNum = Random.Range(0, 2);
+        shps[shpNum].SetActive(true);
     }
 }
