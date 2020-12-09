@@ -23,7 +23,11 @@ public class WallManager : MonoBehaviour
 
     void Spawn(float dist)    //leftz -21.56 centrez -13.3278 rightz -27.054 filler1 -22.935 filler2 -25.682
     {
-        // calculate pos of new wall
+        //build wall
+        
+
+        // spawn new wall
         Instantiate(wall, new Vector3(Mathf.Sin(1.308997f) * dist, Mathf.Cos(1.308997f) * -dist + 5.65f, 0), Quaternion.identity);
+
     }
 }
