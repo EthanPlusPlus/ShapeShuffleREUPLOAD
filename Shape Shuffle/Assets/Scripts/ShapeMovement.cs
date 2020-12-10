@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ShapeMovement : MonoBehaviour
 {
-    [SerializeField] float speed = 1;
+    GameManager gm;
+
     public float xVec, yVec;
 
     public Vector3 mousePos;
@@ -18,8 +19,13 @@ public class ShapeMovement : MonoBehaviour
     Rigidbody shpR;
     Transform shpT;
 
-    void Start()
+    void Awake()
     {
+        gm = (GameManager)FindObjectOfType(typeof(GameManager));
+    }
+
+    void Start()
+    { 
        shpR = GetComponent<Rigidbody>();
        shpT = GetComponent<Transform>();
 
@@ -36,7 +42,7 @@ public class ShapeMovement : MonoBehaviour
         xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
         yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
 
-        shpR.AddForce(xVec * speed, -yVec * speed, 0);
+        shpR.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
     }
 
     IEnumerator Shuffle()

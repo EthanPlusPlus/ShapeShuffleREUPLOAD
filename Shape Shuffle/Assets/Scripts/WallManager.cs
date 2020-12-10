@@ -9,15 +9,19 @@ public class WallManager : MonoBehaviour
 
     public List<GameObject> wallShps = new List<GameObject>();
     public GameObject[] walls;
-    public GameObject wallParent;
-    GameObject correctWall;
+    GameObject wallParent;
+    GameObject correctWall, wallParentClean;
+
+    float currDist;
 
     void Start()
     {
         shapeMovement = (ShapeMovement)FindObjectOfType(typeof(ShapeMovement));
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
 
-        Build();
+        wallParentClean = GameObject.FindGameObjectWithTag("wallParentClean");
+
+        Execute(10, gm.dist);
     }
 
     void Update()
@@ -25,11 +29,19 @@ public class WallManager : MonoBehaviour
         
     }
 
-    void Build()    //leftz -21.56 centrez -13.3278 rightz -27.054 filler1 -22.935 filler2 -25.682
+    void Execute(int wallNum, float dist) //dist 40
+    {   
+        for (int i = 1; i <= wallNum; i++)
+        {
+            Build(dist);    
+        }
+    }
+
+    void Build(float dist)    //leftz -21.56 centrez -13.3278 rightz -27.054 filler1 -22.935 filler2 -25.682
     {
         //build wall
         
-        wallParent = Instantiate(wallParent, Vector3.zero, Quaternion.identity);
+        wallParent = Instantiate(wallParentClean, Vector3.zero, Quaternion.identity);
 
         correctWall = Instantiate(walls[gm.shpNum], Vector3.zero, Rotate(gm.shpNum));
         correctWall.transform.parent = wallParent.transform;
@@ -46,6 +58,7 @@ public class WallManager : MonoBehaviour
                 zR -= 1.376f;
                 GameObject wallRTemp = Instantiate(walls[r], new Vector3(0,0,zR), Rotate(r));
                 wallRTemp.transform.SetParent(wallParent.transform);
+                print("made right object");
 
             }else if(i % 2 == 0){
                 
@@ -73,7 +86,7 @@ public class WallManager : MonoBehaviour
 
         Swop();
 
-        Spawn(35);
+        Spawn(dist);
         // spawn new wall
         
 
@@ -96,12 +109,14 @@ public class WallManager : MonoBehaviour
         cShp = wallShps[0].transform.position;
         wallShps[0].transform.position = wallShps[randShp].transform.position;
         wallShps[randShp].transform.position = cShp;
-        print("swopped" + randShp);
+        //print("swopped" + randShp);
     }
 
     void Spawn(float dist)
     {
-        wallParent.transform.position = new Vector3(Mathf.Sin(1.308997f) * dist, Mathf.Cos(1.308997f) * -dist + 5.65f, 0);
+        currDist += dist;
+        wallParent.transform.position = new Vector3(Mathf.Sin(1.308997f) * currDist, Mathf.Cos(1.308997f) * -currDist + 40.56276f, 0);  //+offset
+        wallShps.Clear();
     }
 
     Quaternion Rotate(int shpNum)
