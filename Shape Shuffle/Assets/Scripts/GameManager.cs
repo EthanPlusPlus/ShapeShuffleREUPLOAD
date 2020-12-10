@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     GameObject startingShp;
 
     [HideInInspector] public int shpNum;
+
     public int laneNum;
     public int levelNum;
 

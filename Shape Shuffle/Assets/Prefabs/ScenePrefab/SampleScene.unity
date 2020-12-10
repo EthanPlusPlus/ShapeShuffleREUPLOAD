@@ -186,7 +186,7 @@ MonoBehaviour:
   - {fileID: 919132148000013645}
   shpNum: 0
   laneNum: 3
-  levelNum: 40
+  levelNum: 1
   speedLerp: 0
   distLerp: 0
   speed: 0
@@ -409,6 +409,7 @@ MonoBehaviour:
   - {fileID: 8997071936455689693, guid: 08a4f5972a2d2074eb239c9629eb2599, type: 3}
   - {fileID: 8493872359639504274, guid: 5c021f558c16adc4d96bb4de1084fe28, type: 3}
   - {fileID: 1827412841}
+  road: {fileID: 993696549}
 --- !u!4 &1773715766
 Transform:
   m_ObjectHideFlags: 0

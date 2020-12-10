@@ -12,6 +12,8 @@ public class WallManager : MonoBehaviour
     GameObject wallParent;
     GameObject correctWall, wallParentClean;
 
+    [SerializeField] GameObject road;
+
     float currDist;
 
     void Start()
@@ -30,7 +32,10 @@ public class WallManager : MonoBehaviour
     }
 
     void Execute(int wallNum, float dist) //dist 40
-    {   
+    {       
+        //change width of road
+        road.transform.localScale = new Vector3(road.transform.localScale.x, 1, (float)(gm.laneNum * 125.066) / 50.0266f); 
+
         for (int i = 1; i <= wallNum; i++)
         {
             Build(dist);    
