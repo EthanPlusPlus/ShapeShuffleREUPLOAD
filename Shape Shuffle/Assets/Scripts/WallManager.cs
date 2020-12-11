@@ -63,7 +63,6 @@ public class WallManager : MonoBehaviour
                 zR -= 1.376f;
                 GameObject wallRTemp = Instantiate(walls[r], new Vector3(0,0,zR), Rotate(r));
                 wallRTemp.transform.SetParent(wallParent.transform);
-                print("made right object");
 
             }else if(i % 2 == 0){
                 

@@ -22,6 +22,8 @@ public class ShapeMovement : MonoBehaviour
     void Awake()
     {
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
+
+        mouseTemp = GameObject.FindGameObjectWithTag("mouseTemp");
     }
 
     void Start()
@@ -62,11 +64,11 @@ public class ShapeMovement : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
 
                 if(mouseTempPos.x > 0){
-                    if(shapePos.z > -1.75f){
+                    if(shapePos.z > -1.75f * ((gm.laneNum -1) / 2)){
                         rightSwiped = true;
                     }
                 }else if(mouseTempPos.x < 0){
-                    if(shapePos.z < 1.75f){
+                    if(shapePos.z < 1.75f * ((gm.laneNum -1) / 2)){
                         leftSwiped = true;
                     }
                 }
@@ -87,12 +89,12 @@ public class ShapeMovement : MonoBehaviour
         //key press input
 
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
-            if(shapePos.z < 1.75f){
+            if(shapePos.z < 1.75f * ((gm.laneNum -1) / 2)){
                 shapePos.z = shapePos.z + 2.75f;
                 transform.position = shapePos;
             }
         }else if(Input.GetKeyDown(KeyCode.RightArrow)){
-            if(shapePos.z > -1.75f){
+            if(shapePos.z > -1.75f * ((gm.laneNum -1) / 2)){
                 shapePos.z = shapePos.z - 2.75f;
                 transform.position = shapePos;
             }
