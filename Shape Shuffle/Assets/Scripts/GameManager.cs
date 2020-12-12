@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{
+{   
+    CameraManager cm;
+
     public GameObject[] shps;
-    GameObject startingShp;
+    public GameObject centreShp;
 
     [HideInInspector] public int shpNum;
 
@@ -21,7 +23,7 @@ public class GameManager : MonoBehaviour
     
     void Awake()
     {
-        
+        cm = (CameraManager)FindObjectOfType(typeof(CameraManager));
     }
 
     void Start()
@@ -86,6 +88,7 @@ public class GameManager : MonoBehaviour
             dist = Mathf.Lerp(distMin50, distMax50, distLerp);
         }
         
+        cm.CamMove();
     }
 
     void ChooseMesh()
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour
             for (int i = 2; i < shpCount+1; i++)
             {
                 if(i % 2 == 0){
-                    GameObject shpTemp = Instantiate(shps[shpNum], new Vector3(7.06f, 38.5f, 1.75f * (1.57142f*(shpCount -2))), Rotate(shpNum));    
+                    GameObject shpTemp = Instantiate(shps[shpNum], new Vector3(7.06f, 38.5f, 1.75f * (1.57142f*(shpCount -1*(shpCount-1)))), Rotate(shpNum));    
                     for (int k = 0; k < shpTemp.transform.childCount; k++)
                     {
                         shpTemp.transform.GetChild(k).gameObject.SetActive(false);    
