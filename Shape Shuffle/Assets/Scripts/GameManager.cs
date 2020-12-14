@@ -9,9 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] shps;
     public GameObject centreShp;
 
-    public Dictionary<int, GameObject> currShps = new Dictionary<int, GameObject>();
-
-    public List<int> shpNum;
+    [HideInInspector] public int shpNum;
 
     public int shpCount;
     public int laneNum = 0;
@@ -95,34 +93,24 @@ public class GameManager : MonoBehaviour
 
     void ChooseMesh()
     {
-        for (int i = 0; i < shpCount; i++)
-        {
-            shpNum.Add(Random.Range(0, 3));
-            //currShps.Add()
-        }
+        shpNum = Random.Range(0, 3);
+        Instantiate(shps[shpNum], new Vector3(7.06f, 38.5f), Rotate(shpNum));
 
-        //shpNum = Random.Range(0, 3);
-        Instantiate(shps[shpNum[0]], new Vector3(7.06f, 38.5f), Rotate(shpNum[0]));
-
-        
         if(shpCount > 1){
-            int numTemp = 1;
             for (int i = 2; i < shpCount+1; i++)
             {
                 if(i % 2 == 0){
-                    GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.5f, 1.75f * (1.57142f*(shpCount -1*(shpCount-1)))), Rotate(shpNum[numTemp]));    
+                    GameObject shpTemp = Instantiate(shps[shpNum], new Vector3(7.06f, 38.5f, 1.75f * (1.57142f*(shpCount -1*(shpCount-1)))), Rotate(shpNum));    
                     for (int k = 0; k < shpTemp.transform.childCount; k++)
                     {
                         shpTemp.transform.GetChild(k).gameObject.SetActive(false);    
                     }
-                    numTemp = numTemp + 1;
                 }else{
-                    GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.5f, -1.75f * (1.57142f*(shpCount -2))), Rotate(shpNum[numTemp]));
+                    GameObject shpTemp = Instantiate(shps[shpNum], new Vector3(7.06f, 38.5f, -1.75f * (1.57142f*(shpCount -2))), Rotate(shpNum));
                     for (int k = 0; k < shpTemp.transform.childCount; k++)
                     {
                         shpTemp.transform.GetChild(k).gameObject.SetActive(false);    
                     }
-                    numTemp = numTemp + 1;
                 }
             }
         }

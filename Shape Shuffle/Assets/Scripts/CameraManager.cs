@@ -17,7 +17,7 @@ public class CameraManager : MonoBehaviour
 
     void Start()
     {
-
+        CamMove();    
     }
 
     void Update()
