@@ -11,6 +11,7 @@ public class WallManager : MonoBehaviour
     public List<GameObject> correctWalls = new List<GameObject>();
     List<GameObject> leftWalls = new List<GameObject>();
     public GameObject[] walls;
+    public GameObject temp;
     GameObject wallParent;
     GameObject correctWall, wallParentClean;
 
@@ -152,17 +153,49 @@ public class WallManager : MonoBehaviour
         }
         
         //swop
-        Vector3 cShp;
-        int randShp = Random.Range(0, wallShps.Count - 3);
-        print(randShp);
-        for (int i = 0; i < gm.shpCount; i++)
-        {
-            cShp = correctWalls[i].transform.position;
-            correctWalls[i].transform.position = wallShps[randShp + i].transform.position;
-            wallShps[randShp + i].transform.position = cShp;    
-            print(wallShps[randShp + i].transform.position);
+        Vector3 cShp = Vector3.zero;
+        Vector3[] oWallPos = new Vector3[wallShps.Count];
+        Vector3[] cWallPos = new Vector3[correctWalls.Count];
+        
+        int randShp = -1;//Random.Range(0, wallShps.Count - 2);     0-5
+        //cShp1 = wallShps[randShp + gm.shpCount + 1].transform.position;
+        
+        for (int k = 0; k < wallShps.Count; k++)
+        {   
+            try
+            {
+                oWallPos[k] = wallShps[k].transform.position;    
+                cWallPos[k] = correctWalls[k].transform.position;    
+               
+            }
+            catch (System.Exception){}
         }
         
+        if(randShp > -1){
+            for (int j = 0; j < gm.shpCount; j++)
+            {
+                correctWalls[j].transform.position = oWallPos[j + gm.shpCount-1 + randShp];   //2 and randShp is offset
+                if(j < randShp){
+                    wallShps[gm.shpCount + gm.shpCount-1 + j].transform.position = cWallPos[j];
+                    //print(cWallPos[j]);
+                }
+            }
+            
+        }else{
+            int iLeftSwop = 0;
+            for (int l = gm.shpCount-1; l > -1; l--)
+            {
+                //print(iLeftSwop + gm.shpCount-1 + randShp); 
+                correctWalls[iLeftSwop].transform.position = oWallPos[iLeftSwop + gm.shpCount-1 + randShp];   //2 and randShp is offset
+                if(iLeftSwop < -randShp){
+                    wallShps[gm.laneNum - gm.shpCount - gm.shpCount-(3-gm.shpCount) - iLeftSwop].transform.position = cWallPos[l];
+                    print(gm.laneNum - gm.shpCount - gm.shpCount - iLeftSwop);
+                }
+                ++iLeftSwop;
+                
+            }
+            
+        }
         //print("swopped" + randShp);
     }
 

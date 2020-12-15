@@ -164,7 +164,7 @@ MonoBehaviour:
   shpNum: 
   shpCount: 0
   laneNum: 0
-  levelNum: 25
+  levelNum: 15
   speedLerp: 0
   distLerp: 0
   speed: 0
@@ -844,7 +844,6 @@ MonoBehaviour:
   - {fileID: 8493872359639504274, guid: 5c021f558c16adc4d96bb4de1084fe28, type: 3}
   - {fileID: 1827412841}
   temp: {fileID: 0}
-  temp1: {fileID: 0}
   road: {fileID: 993696549}
   lC: 0
   rC: 0
