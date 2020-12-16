@@ -31,18 +31,18 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //levelNum = 9;
-        speedMin10 = 200;
-        speedMax10 = 320;
-        speedMin20 = 350;
-        speedMax20 = 420;
-        speedMin50 = 450;
-        speedMax50 = 550;
+        speedMin10 = 700;
+        speedMax10 = 840;
+        speedMin20 = 875;
+        speedMax20 = 1050;
+        speedMin50 = 1750;
+        speedMax50 = 2100;
         distMin10 = 40;
         distMax10 = 30;
-        distMin20 = 35;
-        distMax20 = 20;
-        distMin50 = 20;
-        distMax50 = 10;
+        distMin20 = 70;
+        distMax20 = 40;
+        distMin50 = 80; //20
+        distMax50 = 60; //10
         Difficulty();
 
         ChooseMesh();
