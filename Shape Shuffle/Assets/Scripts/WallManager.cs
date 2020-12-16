@@ -42,7 +42,7 @@ public class WallManager : MonoBehaviour
         //change width of road
         road.transform.localScale = new Vector3(road.transform.localScale.x, 1, (float)(gm.laneNum * 125.066) / 50.0266f); 
 
-        for (int i = 1; i <= 1; i++)
+        for (int i = 1; i <= 10; i++)
         {
             Build(dist);    
         }
@@ -153,12 +153,11 @@ public class WallManager : MonoBehaviour
         }
         
         //swop
-        Vector3 cShp = Vector3.zero;
         Vector3[] oWallPos = new Vector3[wallShps.Count];
         Vector3[] cWallPos = new Vector3[correctWalls.Count];
         
-        int randShp = -1;//Random.Range(0, wallShps.Count - 2);     0-5
-        //cShp1 = wallShps[randShp + gm.shpCount + 1].transform.position;
+        int randShp = Random.Range(-1 * (gm.shpCount-1), 3);    //this may cause issues in the future  (not dynamic)
+        print(randShp);
         
         for (int k = 0; k < wallShps.Count; k++)
         {   
@@ -174,6 +173,8 @@ public class WallManager : MonoBehaviour
         if(randShp > -1){
             for (int j = 0; j < gm.shpCount; j++)
             {
+                print(correctWalls[j]);
+                print(oWallPos[j + gm.shpCount-1 + randShp]);
                 correctWalls[j].transform.position = oWallPos[j + gm.shpCount-1 + randShp];   //2 and randShp is offset
                 if(j < randShp){
                     wallShps[gm.shpCount + gm.shpCount-1 + j].transform.position = cWallPos[j];
@@ -185,7 +186,6 @@ public class WallManager : MonoBehaviour
             int iLeftSwop = 0;
             for (int l = gm.shpCount-1; l > -1; l--)
             {
-                //print(iLeftSwop + gm.shpCount-1 + randShp); 
                 correctWalls[iLeftSwop].transform.position = oWallPos[iLeftSwop + gm.shpCount-1 + randShp];   //2 and randShp is offset
                 if(iLeftSwop < -randShp){
                     wallShps[gm.laneNum - gm.shpCount - gm.shpCount-(3-gm.shpCount) - iLeftSwop].transform.position = cWallPos[l];
@@ -196,14 +196,17 @@ public class WallManager : MonoBehaviour
             }
             
         }
-        //print("swopped" + randShp);
     }
 
     void Spawn(float dist)
     {
         currDist += dist;
         wallParent.transform.position = new Vector3(Mathf.Sin(1.308997f) * currDist, Mathf.Cos(1.308997f) * -currDist + 40.56276f, 0);  //+offset
-        //wallShps.Clear();
+        correctWalls.Clear();
+        leftWalls.Clear();
+        wallShps.Clear();
+        lC = 0;
+        rC = 0;
     }
 
     Quaternion Rotate(int shpNum)
