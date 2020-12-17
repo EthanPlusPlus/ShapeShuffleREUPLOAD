@@ -72,8 +72,14 @@ public class WallManager : MonoBehaviour
 
                 lC += 1;
                 if(lC < gm.shpCount - 1 * (gm.shpCount-2)){
-                    l = gm.shpNum[lC];
-                    cWall = true;
+                    if(gm.shpCount == 1){
+                        l = Random.Range(0, walls.Length-1);
+                        cWall = false;
+                    }else
+                    {
+                        l = gm.shpNum[lC];
+                        cWall = true;   
+                    }
                 }else{
                     l = Random.Range(0, walls.Length-1);
                     cWall = false;
@@ -152,11 +158,23 @@ public class WallManager : MonoBehaviour
             ++iTemp;
         }
         
+        //detect lane
+
+        int lMoves, rMoves;
+        int openLanes = gm.laneNum - gm.shpCount;
+        if(openLanes % 2 == 0){
+            lMoves = openLanes / 2;
+            rMoves = openLanes / 2;
+        }else{
+            lMoves = openLanes / 2;
+            rMoves = openLanes / 2 + 1; 
+        }
+
         //swop
         Vector3[] oWallPos = new Vector3[wallShps.Count];
         Vector3[] cWallPos = new Vector3[correctWalls.Count];
         
-        int randShp = Random.Range(-1 * (gm.shpCount-1), 3);    //this may cause issues in the future  (not dynamic)
+        int randShp = Random.Range(-lMoves,rMoves+1);
         print(randShp);
         
         for (int k = 0; k < wallShps.Count; k++)
@@ -170,31 +188,47 @@ public class WallManager : MonoBehaviour
             catch (System.Exception){}
         }
         
-        if(randShp > -1){
+        if(randShp > 0){       //left shift
             for (int j = 0; j < gm.shpCount; j++)
             {
-                print(correctWalls[j]);
-                print(oWallPos[j + gm.shpCount-1 + randShp]);
-                correctWalls[j].transform.position = oWallPos[j + gm.shpCount-1 + randShp];   //2 and randShp is offset
+                if(gm.shpCount == 1){
+                    print(oWallPos[0]);
+                    correctWalls[j].transform.position = oWallPos[0];    
+                }else{
+                    correctWalls[j].transform.position = oWallPos[j + gm.shpCount-1 + randShp];   //2 and randShp is offset
+                }
+            
                 if(j < randShp){
-                    wallShps[gm.shpCount + gm.shpCount-1 + j].transform.position = cWallPos[j];
+                    if(gm.shpCount == 1){
+                       wallShps[0].transform.position = cWallPos[j];
+                    }else{
+                        wallShps[gm.shpCount + gm.shpCount-1 + j].transform.position = cWallPos[j];
+                    }
                     //print(cWallPos[j]);
                 }
             }
             
-        }else{
+        }else if(randShp < 0){                  //right shift
             int iLeftSwop = 0;
             for (int l = gm.shpCount-1; l > -1; l--)
             {
-                correctWalls[iLeftSwop].transform.position = oWallPos[iLeftSwop + gm.shpCount-1 + randShp];   //2 and randShp is offset
+                if(gm.shpCount == 1){                                                    //remove randShp oz error thrown when shpCount = 0
+                    correctWalls[iLeftSwop].transform.position = oWallPos[2];    
+                }else{
+                    correctWalls[iLeftSwop].transform.position = oWallPos[iLeftSwop + gm.shpCount-1 + randShp];   //2 and randShp is offset    
+                }
+                
                 if(iLeftSwop < -randShp){
-                    wallShps[gm.laneNum - gm.shpCount - gm.shpCount-(3-gm.shpCount) - iLeftSwop].transform.position = cWallPos[l];
-                    print(gm.laneNum - gm.shpCount - gm.shpCount - iLeftSwop);
+                    if(gm.shpCount != 1){
+                        wallShps[gm.laneNum - gm.shpCount - gm.shpCount-(3-gm.shpCount) - iLeftSwop].transform.position = cWallPos[l];
+                    }else{
+                        wallShps[2].transform.position = cWallPos[l];
+                    }
+                    
                 }
                 ++iLeftSwop;
                 
             }
-            
         }
     }
 
