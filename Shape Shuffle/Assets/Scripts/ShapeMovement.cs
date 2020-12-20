@@ -5,11 +5,12 @@ using UnityEngine;
 public class ShapeMovement : MonoBehaviour
 {
     GameManager gm;
-    ShapeMovement[] shapeMovements;
+    WallManager wm;
 
     public float xVec, yVec;
 
     public int lMoves, rMoves;
+    public int currentLane;
 
 
     public Vector3 mousePos;
@@ -26,7 +27,7 @@ public class ShapeMovement : MonoBehaviour
     void Awake()
     {
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
-        shapeMovements = (ShapeMovement[])FindObjectsOfType(typeof(ShapeMovement));
+        wm = (WallManager)FindObjectOfType(typeof(WallManager));
 
         mouseTemp = GameObject.FindGameObjectWithTag("mouseTemp");
 
@@ -132,5 +133,13 @@ public class ShapeMovement : MonoBehaviour
             }
         }
 
+    }
+
+    void LaneDetect()
+    {
+        for (int i = 0; i < gm.laneNum; i++)
+        {
+            //wm.totalWalls[0].transform.GetChild(i)    
+        }
     }
 }

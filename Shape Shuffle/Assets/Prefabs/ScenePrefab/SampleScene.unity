@@ -164,7 +164,7 @@ MonoBehaviour:
   shpNum: 
   shpCount: 0
   laneNum: 0
-  levelNum: 37
+  levelNum: 25
   speedLerp: 0
   distLerp: 0
   speed: 0
@@ -297,6 +297,7 @@ MonoBehaviour:
   yVec: 0
   lMoves: 0
   rMoves: 0
+  currentLane: 0
   mousePos: {x: 0, y: 0, z: 0}
   mouseStartClick: {x: 0, y: 0, z: 0}
   mouseTempPos: {x: 0, y: 0}
@@ -834,7 +835,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallShps: []
+  sortedWallShps: []
   correctWalls: []
+  totalWallsNum: []
   walls:
   - {fileID: 5959623683009279370, guid: 2123072e798da894baae6164224c7e80, type: 3}
   - {fileID: 2055293614881375458, guid: ed5d71f549466224e948f0d02e6d743d, type: 3}
@@ -843,7 +846,6 @@ MonoBehaviour:
   - {fileID: 8997071936455689693, guid: 08a4f5972a2d2074eb239c9629eb2599, type: 3}
   - {fileID: 8493872359639504274, guid: 5c021f558c16adc4d96bb4de1084fe28, type: 3}
   - {fileID: 1827412841}
-  temp: {fileID: 0}
   road: {fileID: 993696549}
   lC: 0
   rC: 0

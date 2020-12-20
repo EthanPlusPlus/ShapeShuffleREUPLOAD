@@ -7,6 +7,9 @@ TagManager:
   - startingShp
   - wallParentClean
   - mouseTemp
+  - circ
+  - tri
+  - sqr
   layers:
   - Default
   - TransparentFX

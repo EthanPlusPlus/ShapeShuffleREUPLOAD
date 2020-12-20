@@ -8,10 +8,13 @@ public class WallManager : MonoBehaviour
     ShapeMovement shapeMovement;
 
     public List<GameObject> wallShps = new List<GameObject>();
+    public List<GameObject> sortedWallShps = new List<GameObject>();
     public List<GameObject> correctWalls = new List<GameObject>();
+    public List<GameObject> totalWallsNum = new List<GameObject>();
+    
     List<GameObject> leftWalls = new List<GameObject>();
+    
     public GameObject[] walls;
-    public GameObject temp;
     GameObject wallParent;
     GameObject correctWall, wallParentClean;
 
@@ -42,7 +45,7 @@ public class WallManager : MonoBehaviour
         //change width of road
         road.transform.localScale = new Vector3(road.transform.localScale.x, 1, (float)(gm.laneNum * 125.066) / 50.0266f); 
 
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= 1; i++)
         {
             Build(dist);    
         }
@@ -55,7 +58,7 @@ public class WallManager : MonoBehaviour
         wallParent = Instantiate(wallParentClean, Vector3.zero, Quaternion.identity);
 
         correctWall = Instantiate(walls[gm.shpNum[0]], Vector3.zero, Rotate(gm.shpNum[0]));
-        correctWall.transform.parent = wallParent.transform;
+        //correctWall.transform.parent = wallParent.transform;
 
 
         float zR = 0;
@@ -87,7 +90,7 @@ public class WallManager : MonoBehaviour
                 
                 zL += 1.375f;
                 GameObject wallLTemp = Instantiate(walls[l], new Vector3(0,0,zL), Rotate(l));//Instantiate(walls[walls.Length - 1], new Vector3(0,0,zR), Rotate(100));
-                wallLTemp.transform.SetParent(wallParent.transform);
+                //wallLTemp.transform.SetParent(wallParent.transform);
                 leftWalls.Add(wallLTemp);
 
                 if(cWall){
@@ -122,7 +125,7 @@ public class WallManager : MonoBehaviour
                 
                 zR -= 1.376f;
                 GameObject wallRTemp = Instantiate(walls[r], new Vector3(0,0,zR), Rotate(r));
-                wallRTemp.transform.SetParent(wallParent.transform);
+                //wallRTemp.transform.SetParent(wallParent.transform);
                 wallShps.Add(wallRTemp);
 
                 if(cWall){
@@ -150,6 +153,7 @@ public class WallManager : MonoBehaviour
 
     void Swop()
     {
+
         //add leftWall list
         int iTemp = 0;
         for (int i = leftWalls.Count-1; i > -1 ; i--)
@@ -175,7 +179,7 @@ public class WallManager : MonoBehaviour
         Vector3[] cWallPos = new Vector3[correctWalls.Count];
         
         int randShp = Random.Range(-lMoves,rMoves+1);
-        print(randShp);
+        //print(randShp);
         
         for (int k = 0; k < wallShps.Count; k++)
         {   
@@ -192,7 +196,6 @@ public class WallManager : MonoBehaviour
             for (int j = 0; j < gm.shpCount; j++)
             {
                 if(gm.shpCount == 1){
-                    print(oWallPos[0]);
                     correctWalls[j].transform.position = oWallPos[0];    
                 }else{
                     correctWalls[j].transform.position = oWallPos[j + gm.shpCount-1 + randShp];   //2 and randShp is offset
@@ -230,17 +233,46 @@ public class WallManager : MonoBehaviour
                 
             }
         }
+        
+        Sort();
+    }
+
+    void Sort() 
+    {
+        var descendingComparer = Comparer<float>.Create((x, y) => y.CompareTo(x));
+        SortedList<float, float> descSortedList = new SortedList<float, float>(descendingComparer);
+
+        foreach(GameObject go in wallShps){
+            descSortedList.Add(go.transform.position.z, go.transform.position.z);
+        }
+        for (int i = 0; i < descSortedList.Count; i++)
+        {
+            for (int j = 0; j < wallShps.Count; j++)
+            {
+                if(descSortedList.Keys[i] == wallShps[j].transform.position.z){
+                    sortedWallShps.Add(wallShps[j]);
+                }   
+            }
+        }
     }
 
     void Spawn(float dist)
     {
+        for (int i = 0; i < wallShps.Count; i++)
+        {
+            sortedWallShps[i].transform.SetParent(wallParent.transform);
+        }
+        
+        totalWallsNum.Add(wallParent);
+
         currDist += dist;
         wallParent.transform.position = new Vector3(Mathf.Sin(1.308997f) * currDist, Mathf.Cos(1.308997f) * -currDist + 40.56276f, 0);  //+offset
         correctWalls.Clear();
         leftWalls.Clear();
-        wallShps.Clear();
+        //wallShps.Clear();
         lC = 0;
         rC = 0;
+
     }
 
     Quaternion Rotate(int shpNum)
@@ -272,5 +304,26 @@ public class WallManager : MonoBehaviour
         }
 
         return rot;
+    }
+
+    int ShpNum(string typeOfShapeOrTag)
+    {
+        switch (typeOfShapeOrTag)
+        {
+            case "sqr":
+                return 0;
+            case "circ":
+                return 1;
+            case "tri":
+                return 2;
+            case "heptcone":
+                return 3;
+            case "icosph":
+                return 4;
+            case "astro":
+                return 5;
+            default:
+                return 0;
+        }
     }
 }
