@@ -45,7 +45,7 @@ public class WallManager : MonoBehaviour
         //change width of road
         road.transform.localScale = new Vector3(road.transform.localScale.x, 1, (float)(gm.laneNum * 125.066) / 50.0266f); 
 
-        for (int i = 1; i <= 1; i++)
+        for (int i = 1; i <= 10; i++)
         {
             Build(dist);    
         }
@@ -269,7 +269,8 @@ public class WallManager : MonoBehaviour
         wallParent.transform.position = new Vector3(Mathf.Sin(1.308997f) * currDist, Mathf.Cos(1.308997f) * -currDist + 40.56276f, 0);  //+offset
         correctWalls.Clear();
         leftWalls.Clear();
-        //wallShps.Clear();
+        wallShps.Clear();
+        sortedWallShps.Clear();
         lC = 0;
         rC = 0;
 

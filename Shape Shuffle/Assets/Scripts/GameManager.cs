@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
                     tempTrueCheck = true;
                 }else{
                     tempTrueCheck = false;
-                    print("vr");
+                    //print("vr");
                     break;
                 }
             }
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
            allShpCorrect = true; 
         }else{
             allShpCorrect = false;
-            print("huh");
+            //print("huh");
         }
     }
 

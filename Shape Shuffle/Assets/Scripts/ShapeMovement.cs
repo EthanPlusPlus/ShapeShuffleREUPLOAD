@@ -10,7 +10,7 @@ public class ShapeMovement : MonoBehaviour
     public float xVec, yVec;
 
     public int lMoves, rMoves;
-    public int currentLane;
+    public int currentLane, currentWall;
 
 
     public Vector3 mousePos;
@@ -143,8 +143,17 @@ public class ShapeMovement : MonoBehaviour
 
     void LaneDetect()
     {
-        //int laneWallNum = wm.ShpNum(nameWall);
-        Transform wallTransform = wm.totalWalls[0].transform;
+        Transform wallTransform = wm.totalWalls[currentWall].transform;
+        
+        if(transform.position.x > wallTransform.position.x){        //make offset to make delay or quicker reaction (+pos.x)
+            if(gm.allShpCorrect)
+                ++currentWall;
+            else{
+                print("dead");
+                return;
+            }
+        }
+
         string wallName = wallTransform.GetChild((gm.laneNum-1) + currentLane).gameObject.tag;
 
         if(tag == wallName){
@@ -153,4 +162,5 @@ public class ShapeMovement : MonoBehaviour
             correctLane = false;
         }
     }
+
 }
