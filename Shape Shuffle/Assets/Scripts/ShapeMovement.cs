@@ -137,9 +137,9 @@ public class ShapeMovement : MonoBehaviour
 
     void LaneDetect()
     {
-        for (int i = 0; i < gm.laneNum; i++)
+        for (int i = gm.shpCount-1; i < gm.laneNum; i++)
         {
-            //wm.totalWalls[0].transform.GetChild(i)    
+            //wm.totalWalls[0].transform.GetChild(i).gameObject.tag    
         }
     }
 }

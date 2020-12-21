@@ -10,7 +10,7 @@ public class WallManager : MonoBehaviour
     public List<GameObject> wallShps = new List<GameObject>();
     public List<GameObject> sortedWallShps = new List<GameObject>();
     public List<GameObject> correctWalls = new List<GameObject>();
-    public List<GameObject> totalWallsNum = new List<GameObject>();
+    public List<GameObject> totalWalls = new List<GameObject>();
     
     List<GameObject> leftWalls = new List<GameObject>();
     
@@ -263,7 +263,7 @@ public class WallManager : MonoBehaviour
             sortedWallShps[i].transform.SetParent(wallParent.transform);
         }
         
-        totalWallsNum.Add(wallParent);
+        totalWalls.Add(wallParent);
 
         currDist += dist;
         wallParent.transform.position = new Vector3(Mathf.Sin(1.308997f) * currDist, Mathf.Cos(1.308997f) * -currDist + 40.56276f, 0);  //+offset
@@ -275,7 +275,7 @@ public class WallManager : MonoBehaviour
 
     }
 
-    Quaternion Rotate(int shpNum)
+    public Quaternion Rotate(int shpNum)
     {
         Quaternion rot;
         switch (shpNum)
