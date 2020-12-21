@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] shps;
     public GameObject centreShp;
 
-    public Dictionary<int, GameObject> currShps = new Dictionary<int, GameObject>();
+    public List<GameObject> currShps = new List<GameObject>();
 
     public List<int> shpNum;
 
@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public float speedLerp, distLerp;            //manipulate this
     public float speed, dist;         //output this
+
+    public bool allShpCorrect;
     
     void Awake()
     {
@@ -50,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        CheckShapes();
     }
 
     void Difficulty()
@@ -102,8 +104,9 @@ public class GameManager : MonoBehaviour
         }
 
         //shpNum = Random.Range(0, 3);
-        Instantiate(shps[shpNum[0]], new Vector3(7.06f, 38.5f), Rotate(shpNum[0])).gameObject.GetComponent<ShapeMovement>().currentLane = laneNum / 2;
-
+        GameObject firstShp = Instantiate(shps[shpNum[0]], new Vector3(7.06f, 38.5f), Rotate(shpNum[0]));
+        firstShp.GetComponent<ShapeMovement>().currentLane = laneNum / 2;
+        currShps.Add(firstShp);
         
         if(shpCount > 1){
             int numTemp = 1;
@@ -112,6 +115,7 @@ public class GameManager : MonoBehaviour
                 if(i % 2 == 0){
                     GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.5f, 1.75f * (1.57142f*(shpCount -1*(shpCount-1)))), Rotate(shpNum[numTemp]));    //spawn shp on left
                     shpTemp.GetComponent<ShapeMovement>().currentLane = (2 * i - (3 - ((laneNum-5) / 2)));   //Lane = 2*SpawnOrder - 3    (3 has adjustments (must decrease by 1 every new 2 lanes))  
+                    currShps.Add(shpTemp);
                     for (int k = 0; k < shpTemp.transform.childCount; k++)
                     {
                         shpTemp.transform.GetChild(k).gameObject.SetActive(false);    
@@ -120,6 +124,7 @@ public class GameManager : MonoBehaviour
                 }else{
                     GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.5f, -1.75f * (1.57142f*(shpCount -2))), Rotate(shpNum[numTemp]));                 //spawn on right
                     shpTemp.GetComponent<ShapeMovement>().currentLane = (2 * i - (3 - ((laneNum-5) / 2)));          //((2 + ((laneNum-5) / 2)) * i) - (3 + ((laneNum-5) / 2));
+                    currShps.Add(shpTemp);
                     for (int k = 0; k < shpTemp.transform.childCount; k++)  //12
                     {
                         shpTemp.transform.GetChild(k).gameObject.SetActive(false);    
@@ -130,6 +135,31 @@ public class GameManager : MonoBehaviour
         }
 
         //shps[shpNum].SetActive(true);
+    }
+
+    void CheckShapes()
+    {
+        bool tempTrueCheck = false;
+        for (int i = 0; i < shpCount; i++)
+        {
+            if(currShps != null){
+                if(currShps[i].GetComponent<ShapeMovement>().correctLane)
+                {
+                    tempTrueCheck = true;
+                }else{
+                    tempTrueCheck = false;
+                    print("vr");
+                    break;
+                }
+            }
+        }
+
+        if(tempTrueCheck){
+           allShpCorrect = true; 
+        }else{
+            allShpCorrect = false;
+            print("huh");
+        }
     }
 
     Quaternion Rotate(int shpNum)

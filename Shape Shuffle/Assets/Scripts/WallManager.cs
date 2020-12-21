@@ -275,7 +275,7 @@ public class WallManager : MonoBehaviour
 
     }
 
-    public Quaternion Rotate(int shpNum)
+    Quaternion Rotate(int shpNum)
     {
         Quaternion rot;
         switch (shpNum)
@@ -306,7 +306,7 @@ public class WallManager : MonoBehaviour
         return rot;
     }
 
-    int ShpNum(string typeOfShapeOrTag)
+    public int ShpNum(string typeOfShapeOrTag)
     {
         switch (typeOfShapeOrTag)
         {

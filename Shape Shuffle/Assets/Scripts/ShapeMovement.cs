@@ -18,6 +18,7 @@ public class ShapeMovement : MonoBehaviour
     public Vector2 mouseTempPos;
 
     public bool clicked, leftSwiped, rightSwiped;
+    public bool correctLane;
 
     public GameObject mouseTemp;
 
@@ -48,6 +49,7 @@ public class ShapeMovement : MonoBehaviour
     void Update()
     {
         StartCoroutine(Shuffle());
+        LaneDetect();
     }
 
     public void Move(Rigidbody r)
@@ -104,6 +106,7 @@ public class ShapeMovement : MonoBehaviour
             transform.position = shapePos;
             lMoves -= 1;
             rMoves += 1;
+            --currentLane;
             leftSwiped = false;
         }
         
@@ -112,6 +115,7 @@ public class ShapeMovement : MonoBehaviour
             transform.position = shapePos;
             lMoves += 1;
             rMoves -= 1;
+            ++currentLane;
             rightSwiped = false;
         }
 
@@ -123,6 +127,7 @@ public class ShapeMovement : MonoBehaviour
                 transform.position = shapePos;
                 lMoves -= 1;
                 rMoves += 1;
+                --currentLane;
             }
         }else if(Input.GetKeyDown(KeyCode.RightArrow)){
             if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
@@ -130,6 +135,7 @@ public class ShapeMovement : MonoBehaviour
                 transform.position = shapePos;
                 lMoves += 1;
                 rMoves -= 1;
+                ++currentLane;
             }
         }
 
@@ -137,9 +143,14 @@ public class ShapeMovement : MonoBehaviour
 
     void LaneDetect()
     {
-        for (int i = gm.shpCount-1; i < gm.laneNum; i++)
-        {
-            //wm.totalWalls[0].transform.GetChild(i).gameObject.tag    
+        //int laneWallNum = wm.ShpNum(nameWall);
+        Transform wallTransform = wm.totalWalls[0].transform;
+        string wallName = wallTransform.GetChild((gm.laneNum-1) + currentLane).gameObject.tag;
+
+        if(tag == wallName){
+            correctLane = true;
+        }else{
+            correctLane = false;
         }
     }
 }

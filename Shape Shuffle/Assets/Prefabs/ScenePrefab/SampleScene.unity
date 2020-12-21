@@ -161,14 +161,16 @@ MonoBehaviour:
   - {fileID: 5784043702046022727, guid: 5a3dbb970ba3fb04f97c2e54f74f59a2, type: 3}
   - {fileID: 3824305807726941836, guid: 16e088f0d58770542ab89156e647935c, type: 3}
   centreShp: {fileID: 0}
+  currShps: []
   shpNum: 
   shpCount: 0
   laneNum: 0
-  levelNum: 25
+  levelNum: 16
   speedLerp: 0
   distLerp: 0
   speed: 0
   dist: 0
+  allShpCorrect: 0
 --- !u!4 &246969538
 Transform:
   m_ObjectHideFlags: 0
@@ -304,6 +306,7 @@ MonoBehaviour:
   clicked: 0
   leftSwiped: 0
   rightSwiped: 0
+  correctLane: 0
   mouseTemp: {fileID: 77617100}
 --- !u!54 &364639081
 Rigidbody:
@@ -837,7 +840,7 @@ MonoBehaviour:
   wallShps: []
   sortedWallShps: []
   correctWalls: []
-  totalWallsNum: []
+  totalWalls: []
   walls:
   - {fileID: 5959623683009279370, guid: 2123072e798da894baae6164224c7e80, type: 3}
   - {fileID: 2055293614881375458, guid: ed5d71f549466224e948f0d02e6d743d, type: 3}

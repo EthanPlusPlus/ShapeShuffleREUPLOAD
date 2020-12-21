@@ -10,6 +10,9 @@ TagManager:
   - circ
   - tri
   - sqr
+  - astro
+  - icosph
+  - heptcone
   layers:
   - Default
   - TransparentFX
