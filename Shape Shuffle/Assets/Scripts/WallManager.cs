@@ -45,7 +45,7 @@ public class WallManager : MonoBehaviour
         //change width of road
         road.transform.localScale = new Vector3(road.transform.localScale.x, 1, (float)(gm.laneNum * 125.066) / 50.0266f); 
 
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= gm.wallNum; i++)
         {
             Build(dist);    
         }

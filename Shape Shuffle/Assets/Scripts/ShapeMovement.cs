@@ -143,6 +143,12 @@ public class ShapeMovement : MonoBehaviour
 
     void LaneDetect()
     {
+        if(currentWall >= gm.wallNum){
+            print("u won");
+            return;
+        }
+        
+
         Transform wallTransform = wm.totalWalls[currentWall].transform;
         
         if(transform.position.x > wallTransform.position.x){        //make offset to make delay or quicker reaction (+pos.x)
@@ -154,12 +160,22 @@ public class ShapeMovement : MonoBehaviour
             }
         }
 
-        string wallName = wallTransform.GetChild((gm.laneNum-1) + currentLane).gameObject.tag;
+        Transform singleWall = wallTransform.GetChild((gm.laneNum-1) + currentLane);
+        string wallName = singleWall.gameObject.tag;
 
         if(tag == wallName){
+            singleWall.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
             correctLane = true;
         }else{
+            singleWall.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
             correctLane = false;
+        }
+    }
+    
+    void OnCollisionEnter(Collision col)
+    {
+        if(col != null){
+            gm.lost = true;
         }
     }
 

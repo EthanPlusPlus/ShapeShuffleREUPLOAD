@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int shpCount;
     public int laneNum = 0;
     public int levelNum;
+    public int wallNum;
 
     float speedMax10, speedMin10, speedMin20, speedMax20, speedMin50, speedMax50;
     float distMin10, distMax10, distMin20, distMax20, distMin50, distMax50; 
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     public float speedLerp, distLerp;            //manipulate this
     public float speed, dist;         //output this
 
+    public bool lost;
     public bool allShpCorrect;
     
     void Awake()
@@ -63,6 +65,8 @@ public class GameManager : MonoBehaviour
 
             shpCount = 1;
 
+            wallNum = 5;
+
             speedLerp = (float)levelNum / 10;
             speed = Mathf.Lerp(speedMin10, speedMax10, speedLerp);
 
@@ -74,6 +78,8 @@ public class GameManager : MonoBehaviour
 
             shpCount = 2;
 
+            wallNum = 7;
+
             speedLerp = (float)levelNum / 20;
             speed = Mathf.Lerp(speedMin20, speedMax20, speedLerp);
         
@@ -84,6 +90,8 @@ public class GameManager : MonoBehaviour
             laneNum = 7;
 
             shpCount = 3;
+
+            wallNum = 10;
 
             speedLerp = (float)levelNum / 50;
             speed = Mathf.Lerp(speedMin50, speedMax50, speedLerp);

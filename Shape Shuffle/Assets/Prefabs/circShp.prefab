@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 8517850235314693803}
   - component: {fileID: 5784043702046022744}
   - component: {fileID: 5784043702046022745}
+  - component: {fileID: 3768835239297541501}
   m_Layer: 0
   m_Name: circShp
   m_TagString: circ
@@ -376,12 +377,15 @@ MonoBehaviour:
   yVec: 0
   lMoves: 0
   rMoves: 0
+  currentLane: 0
+  currentWall: 0
   mousePos: {x: 0, y: 0, z: 0}
   mouseStartClick: {x: 0, y: 0, z: 0}
   mouseTempPos: {x: 0, y: 0}
   clicked: 0
   leftSwiped: 0
   rightSwiped: 0
+  correctLane: 0
   mouseTemp: {fileID: 0}
 --- !u!54 &5784043702046022745
 Rigidbody:
@@ -399,3 +403,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3768835239297541501
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5784043702046022727}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.008805476, y: 0.009517263, z: 0.0060126386}
+  m_Center: {x: -0.00016281863, y: 0.00028281615, z: -0.00042807235}
