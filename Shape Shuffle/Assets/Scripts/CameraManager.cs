@@ -15,6 +15,7 @@ public class CameraManager : MonoBehaviour
     public float zoomSpeed;
     float startTime;
     float startRotX;
+    public float rotCovered, currRotLerp; 
     float xVec, yVec;
 
     bool startRecorded = false;
@@ -63,10 +64,10 @@ public class CameraManager : MonoBehaviour
 
         float distCovered = (Time.time - startTime) * zoomSpeed;            //Time.time changes variable
         float currDistLerp = (float)distCovered/distance;
-        float rotCovered = transform.rotation.x - startRotX;
-        float currRotLerp = (float)rotCovered/(startRotX+25);
+        rotCovered = Time.time - startTime;
+        currRotLerp = (float)rotCovered/5;
     
         transform.position = new Vector3(Mathf.SmoothStep(startPos.x, zoomGo.transform.position.x, currDistLerp),Mathf.SmoothStep(startPos.y, zoomGo.transform.position.y, currDistLerp),0);
-        transform.rotation = new Quaternion(Mathf.SmoothStep(startRotX, startRotX + 25, currRotLerp), 0, 0, 0);
+        transform.rotation = Quaternion.Euler(0, 0, -Mathf.SmoothStep(0, 25, currRotLerp));
     }
 }

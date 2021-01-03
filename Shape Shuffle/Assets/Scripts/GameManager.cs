@@ -124,33 +124,33 @@ public class GameManager : MonoBehaviour
                     GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.5f, 1.75f * (1.57142f*(shpCount -1*(shpCount-1)))), Rotate(shpNum[numTemp]));    //spawn shp on left
                     shpTemp.GetComponent<ShapeMovement>().currentLane = (2 * i - (3 - ((laneNum-5) / 2)));   //Lane = 2*SpawnOrder - 3    (3 has adjustments (must decrease by 1 every new 2 lanes))  
                     currShps.Add(shpTemp);
-                    if(shpTemp.transform.childCount == 1){
-                        for (int k = 0; k < shpTemp.transform.GetChild(0).childCount; k++)
-                        {
-                            shpTemp.transform.GetChild(0).GetChild(k).gameObject.SetActive(false);
-                        }
-                    }else{
-                        for (int k = 0; k < shpTemp.transform.childCount; k++)
-                        {   
-                            shpTemp.transform.GetChild(k).gameObject.SetActive(false);
-                        }
-                    }
+                    // if(shpTemp.transform.childCount == 1){
+                    //     for (int k = 0; k < shpTemp.transform.GetChild(0).childCount; k++)
+                    //     {
+                    //         shpTemp.transform.GetChild(0).GetChild(k).gameObject.SetActive(false);
+                    //     }
+                    // }else{
+                    //     for (int k = 0; k < shpTemp.transform.childCount; k++)
+                    //     {   
+                    //         shpTemp.transform.GetChild(k).gameObject.SetActive(false);
+                    //     }
+                    // }
                     numTemp = numTemp + 1;
                 }else{
                     GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.5f, -1.75f * (1.57142f*(shpCount -2))), Rotate(shpNum[numTemp]));                 //spawn on right
                     shpTemp.GetComponent<ShapeMovement>().currentLane = (2 * i - (3 - ((laneNum-5) / 2)));          //((2 + ((laneNum-5) / 2)) * i) - (3 + ((laneNum-5) / 2));
                     currShps.Add(shpTemp);
-                    if(shpTemp.transform.childCount == 1){
-                        for (int k = 0; k < shpTemp.transform.GetChild(0).childCount; k++)
-                        {
-                            shpTemp.transform.GetChild(0).GetChild(k).gameObject.SetActive(false);
-                        }
-                    }else{
-                        for (int k = 0; k < shpTemp.transform.childCount; k++)
-                        {   
-                            shpTemp.transform.GetChild(k).gameObject.SetActive(false);
-                        }
-                    }
+                    // if(shpTemp.transform.childCount == 1){
+                    //     for (int k = 0; k < shpTemp.transform.GetChild(0).childCount; k++)
+                    //     {
+                    //         shpTemp.transform.GetChild(0).GetChild(k).gameObject.SetActive(false);
+                    //     }
+                    // }else{
+                    //     for (int k = 0; k < shpTemp.transform.childCount; k++)
+                    //     {   
+                    //         shpTemp.transform.GetChild(k).gameObject.SetActive(false);
+                    //     }
+                    // }
                     numTemp = numTemp + 1;
                 }
             }
