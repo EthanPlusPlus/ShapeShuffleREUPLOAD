@@ -290,13 +290,13 @@ public class WallManager : MonoBehaviour
             case 2:
                 rot = Quaternion.Euler(15, 90, -90);
                 break;
+            // case 3:
+            //     rot = Quaternion.Euler(15, 90, 0);
+            //     break;
+            // case 4:
+            //     rot = Quaternion.Euler(15, 90, 0);
+            //     break;
             case 3:
-                rot = Quaternion.Euler(15, 90, 0);
-                break;
-            case 4:
-                rot = Quaternion.Euler(15, 90, 0);
-                break;
-            case 5:
                 rot = Quaternion.Euler(15, 90, -90);
                 break;
             default:
@@ -317,12 +317,12 @@ public class WallManager : MonoBehaviour
                 return 1;
             case "tri":
                 return 2;
-            case "heptcone":
-                return 3;
-            case "icosph":
-                return 4;
+            // case "heptcone":
+            //     return 3;
+            // case "icosph":
+            //     return 4;
             case "astro":
-                return 5;
+                return 3;
             default:
                 return 0;
         }

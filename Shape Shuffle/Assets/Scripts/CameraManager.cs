@@ -12,13 +12,15 @@ public class CameraManager : MonoBehaviour
 
     Vector3 startPos;
 
-    public float zoomSpeed;
+    public float zoomSpeed, magintudeShake;
+    public float durationShake = 3;
     float startTime;
     float startRotX;
-    public float rotCovered, currRotLerp; 
+     
     float xVec, yVec;
 
     bool startRecorded = false;
+    
 
     void Awake()
     {
@@ -42,6 +44,9 @@ public class CameraManager : MonoBehaviour
                 startTime = Time.time;
                 camR.AddForce(xVec * -gm.speed, yVec * gm.speed, 0);
                 zoomGo.transform.SetParent(null);
+
+                StartCoroutine(Shake());
+
                 startRecorded = true;
             }
             
@@ -64,10 +69,30 @@ public class CameraManager : MonoBehaviour
 
         float distCovered = (Time.time - startTime) * zoomSpeed;            //Time.time changes variable
         float currDistLerp = (float)distCovered/distance;
-        rotCovered = Time.time - startTime;
-        currRotLerp = (float)rotCovered/5;
+        float rotCovered = Time.time - startTime;
+        float currRotLerp = (float)rotCovered/5;
     
         transform.position = new Vector3(Mathf.SmoothStep(startPos.x, zoomGo.transform.position.x, currDistLerp),Mathf.SmoothStep(startPos.y, zoomGo.transform.position.y, currDistLerp),0);
         transform.rotation = Quaternion.Euler(0, 0, -Mathf.SmoothStep(0, 25, currRotLerp));
+    }
+
+    IEnumerator Shake()
+    {
+        while(Time.time - startTime < durationShake){
+            float z = Random.Range(-1f, 1f) * magintudeShake;
+
+            transform.position = new Vector3(transform.position.x, transform.position.y, z);
+
+            yield return null;
+        }
+    }
+
+    IEnumerator ExecuteCam()
+    {
+        
+        
+        yield return new WaitForSeconds(1);
+
+    
     }
 }

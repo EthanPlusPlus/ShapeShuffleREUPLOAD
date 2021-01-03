@@ -196,13 +196,13 @@ public class GameManager : MonoBehaviour
             case 2:
                 rot = Quaternion.Euler(-75, 90, 0);
                 break;
+            // case 3:
+            //     rot = Quaternion.Euler(0, 0, 0);//(-75, 90, 0);
+            //     break;
+            // case 4:
+            //     rot = Quaternion.Euler(-105, -90, 0);   
+            //     break;
             case 3:
-                rot = Quaternion.Euler(0, 0, 0);//(-75, 90, 0);
-                break;
-            case 4:
-                rot = Quaternion.Euler(-105, -90, 0);   
-                break;
-            case 5:
                 rot = Quaternion.Euler(0, 0, 0);
                 break;
 

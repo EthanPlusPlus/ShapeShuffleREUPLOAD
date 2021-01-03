@@ -160,8 +160,6 @@ MonoBehaviour:
   - {fileID: 1260982917511409239, guid: cb7a7a50f1efa754d9f7e85843dbab6e, type: 3}
   - {fileID: 5784043702046022727, guid: 5a3dbb970ba3fb04f97c2e54f74f59a2, type: 3}
   - {fileID: 3824305807726941836, guid: 16e088f0d58770542ab89156e647935c, type: 3}
-  - {fileID: 6625441497321476522, guid: 91173405a0fd8414c8f2ed6626ff3857, type: 3}
-  - {fileID: 8319220152625553949, guid: 1ef414b154095894cba8af65804fdf32, type: 3}
   - {fileID: 5515038672665683426, guid: fc1f360d702561a4a895ff603a4db804, type: 3}
   centreShp: {fileID: 0}
   currShps: []
@@ -848,8 +846,6 @@ MonoBehaviour:
   - {fileID: 5959623683009279370, guid: 2123072e798da894baae6164224c7e80, type: 3}
   - {fileID: 2055293614881375458, guid: ed5d71f549466224e948f0d02e6d743d, type: 3}
   - {fileID: 5357854073646975429, guid: d58e842d9fbc50a4fb79c7495842b8e9, type: 3}
-  - {fileID: 273949932278357955, guid: 213142613eb49aa47acb482a5ade685a, type: 3}
-  - {fileID: 8997071936455689693, guid: 08a4f5972a2d2074eb239c9629eb2599, type: 3}
   - {fileID: 8493872359639504274, guid: 5c021f558c16adc4d96bb4de1084fe28, type: 3}
   - {fileID: 1827412841}
   road: {fileID: 993696549}
@@ -923,8 +919,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zoomGo: {fileID: 1961074706}
   zoomSpeed: 10
-  rotCovered: 0
-  currRotLerp: 0
+  magintudeShake: 0.5
+  durationShake: 0.5
 --- !u!4 &1895600643
 Transform:
   m_ObjectHideFlags: 0
