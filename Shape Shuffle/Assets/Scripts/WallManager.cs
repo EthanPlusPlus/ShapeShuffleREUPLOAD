@@ -15,6 +15,7 @@ public class WallManager : MonoBehaviour
     List<GameObject> leftWalls = new List<GameObject>();
     
     public GameObject[] walls;
+    GameObject startRoadPos;
     GameObject wallParent;
     GameObject correctWall, wallParentClean;
 
@@ -31,8 +32,10 @@ public class WallManager : MonoBehaviour
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
 
         wallParentClean = GameObject.FindGameObjectWithTag("wallParentClean");
+        startRoadPos = GameObject.Find("startRoadPos");
 
         Execute(10, gm.dist);
+
     }
 
     void Update()
@@ -42,13 +45,18 @@ public class WallManager : MonoBehaviour
 
     void Execute(int wallNum, float dist) //dist 40
     {       
-        //change width of road
-        road.transform.localScale = new Vector3(road.transform.localScale.x, 1, (float)(gm.laneNum * 125.066) / 50.0266f); 
 
         for (int i = 1; i <= gm.wallNum; i++)
         {
             Build(dist);    
         }
+
+        // //change width of road
+        float scaleXRoad = ((float)gm.dist*gm.wallNum/192.45f) - 0.013404f;     // 1 : 192.45f
+
+        startRoadPos.transform.localScale = new Vector3(scaleXRoad, 1, 1);
+        road.transform.localScale = new Vector3(road.transform.localScale.x, 1, (float)(gm.laneNum * 125.066) / 50.0266f);
+
     }
 
     void Build(float dist)    //leftz -21.56 centrez -13.3278 rightz -27.054 filler1 -22.935 filler2 -25.682

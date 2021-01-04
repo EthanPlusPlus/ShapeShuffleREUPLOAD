@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public int levelNum;
     public int wallNum;
 
+
     float speedMax10, speedMin10, speedMin20, speedMax20, speedMin50, speedMax50;
     float distMin10, distMax10, distMin20, distMax20, distMin50, distMax50; 
 

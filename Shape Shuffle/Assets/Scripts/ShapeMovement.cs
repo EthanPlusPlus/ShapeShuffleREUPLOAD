@@ -176,6 +176,7 @@ public class ShapeMovement : MonoBehaviour
     {
         if(col != null){
             gm.lost = true;
+            shpR.AddForce(new Vector3(-500, Random.Range(300, 500), Random.Range(-700, 700)));
         }
     }
 
