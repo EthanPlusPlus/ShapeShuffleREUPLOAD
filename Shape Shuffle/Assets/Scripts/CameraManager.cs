@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     GameManager gm;
+    WallManager wm;
 
     Rigidbody camR;
 
@@ -25,6 +26,7 @@ public class CameraManager : MonoBehaviour
     void Awake()
     {
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
+        wm = (WallManager)FindObjectOfType(typeof(WallManager));
 
         camR = GetComponent<Rigidbody>();
     }
@@ -36,22 +38,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {   
-        if(gm.lost){
-            
-            if(!startRecorded){
-                startPos = transform.position;
-                startRotX = transform.rotation.x;
-                startTime = Time.time;
-                camR.AddForce(xVec * -gm.speed, yVec * gm.speed, 0);
-                zoomGo.transform.SetParent(null);
-
-                StartCoroutine(Shake());
-
-                startRecorded = true;
-            }
-            
-            ZoomOut(Vector3.Distance(zoomGo.transform.position, startPos));
-        }
+        EndLvlExecute();
     }
 
     public void CamMove()
@@ -64,15 +51,16 @@ public class CameraManager : MonoBehaviour
         camR.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
     }
 
-    void ZoomOut(float distance)
+    void ZoomOut(float speed, float distOffset)
     {
+        float distance = Vector3.Distance(new Vector3(zoomGo.transform.position.x - distOffset, zoomGo.transform.position.y + distOffset/1.5f), startPos);
 
-        float distCovered = (Time.time - startTime) * zoomSpeed;            //Time.time changes variable
+        float distCovered = (Time.time - startTime) * speed;            //Time.time changes variable
         float currDistLerp = (float)distCovered/distance;
         float rotCovered = Time.time - startTime;
         float currRotLerp = (float)rotCovered/5;
     
-        transform.position = new Vector3(Mathf.SmoothStep(startPos.x, zoomGo.transform.position.x, currDistLerp),Mathf.SmoothStep(startPos.y, zoomGo.transform.position.y, currDistLerp),0);
+        transform.position = new Vector3(Mathf.SmoothStep(startPos.x, zoomGo.transform.position.x - distOffset, currDistLerp),Mathf.SmoothStep(startPos.y, zoomGo.transform.position.y + distOffset/1.5f, currDistLerp),0);
         transform.rotation = Quaternion.Euler(0, 0, -Mathf.SmoothStep(0, 25, currRotLerp));
     }
 
@@ -87,12 +75,48 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    IEnumerator ExecuteCam()
+    void EndLvlExecute()
     {
-        
-        
-        yield return new WaitForSeconds(1);
+        if(gm.lost){
+            
+            if(!startRecorded){
+                startPos = transform.position;
+                startRotX = transform.rotation.x;
+                startTime = Time.time;
+                camR.AddForce(xVec * -gm.speed, yVec * gm.speed, 0);
+                zoomGo.transform.SetParent(null);
 
-    
+                StartCoroutine(Shake());
+
+                startRecorded = true;
+            }
+            
+            ZoomOut(12, 0);
+        }
+        else if(gm.won){
+
+            if(!startRecorded){
+                startPos = transform.position;
+                startRotX = transform.rotation.x;
+                startTime = Time.time;
+                camR.AddForce(xVec * -gm.speed, yVec * gm.speed, 0);
+                zoomGo.transform.SetParent(null);
+                
+                List<GameObject> tw = new List<GameObject>();
+                tw = wm.totalWalls;
+                ;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    gm.psConfetti[i].gameObject.transform.position = tw[tw.Count-1].transform.position;
+                    gm.psConfetti[i].Play();
+                }
+                tw[tw.Count-1].SetActive(false);
+                startRecorded = true;
+            }            
+
+            ZoomOut(25, 60);
+
+        }
     }
 }

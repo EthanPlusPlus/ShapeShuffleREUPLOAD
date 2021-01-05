@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     CameraManager cm;
 
     public GameObject[] shps;
+    public ParticleSystem[] psConfetti;
     public GameObject centreShp;
 
     public List<GameObject> currShps = new List<GameObject>();
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour
     public float speedLerp, distLerp;            //manipulate this
     public float speed, dist;         //output this
 
-    public bool lost;
+    public bool lost, won;
     public bool allShpCorrect;
     
     void Awake()

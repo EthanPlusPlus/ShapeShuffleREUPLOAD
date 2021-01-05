@@ -144,7 +144,7 @@ public class ShapeMovement : MonoBehaviour
     void LaneDetect()
     {
         if(currentWall >= gm.wallNum){
-            print("u won");
+            gm.won = true;
             return;
         }
         
