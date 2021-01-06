@@ -104,12 +104,12 @@ public class CameraManager : MonoBehaviour
                 
                 List<GameObject> tw = new List<GameObject>();
                 tw = wm.totalWalls;
-                ;
+                ParticleSystem[] con = gm.psConfetti;
 
                 for (int i = 0; i < 3; i++)
                 {
-                    gm.psConfetti[i].gameObject.transform.position = tw[tw.Count-1].transform.position;
-                    gm.psConfetti[i].Play();
+                    con[i].gameObject.transform.position = tw[tw.Count-1].transform.position;
+                    con[i].Play();
                 }
                 tw[tw.Count-1].SetActive(false);
                 startRecorded = true;

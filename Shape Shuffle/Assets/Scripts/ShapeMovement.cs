@@ -145,6 +145,7 @@ public class ShapeMovement : MonoBehaviour
     {
         if(currentWall >= gm.wallNum){
             gm.won = true;
+            GetComponent<MeshRenderer>().enabled = false;
             return;
         }
         
