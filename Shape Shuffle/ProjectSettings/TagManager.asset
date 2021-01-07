@@ -13,6 +13,10 @@ TagManager:
   - astro
   - icosph
   - heptcone
+  - donut
+  - heart
+  - star
+  - egg
   layers:
   - Default
   - TransparentFX

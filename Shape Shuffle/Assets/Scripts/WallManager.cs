@@ -284,7 +284,7 @@ public class WallManager : MonoBehaviour
 
     }
 
-    Quaternion Rotate(int shpNum)
+    Quaternion Rotate(int shpNum)   //for walls
     {
         Quaternion rot;
         switch (shpNum)
@@ -296,7 +296,7 @@ public class WallManager : MonoBehaviour
                 rot = Quaternion.Euler(15, 90, 0);
                 break;
             case 2:
-                rot = Quaternion.Euler(15, 90, -90);
+                rot = Quaternion.Euler(15, 90, 90);
                 break;
             // case 3:
             //     rot = Quaternion.Euler(15, 90, 0);
@@ -305,6 +305,12 @@ public class WallManager : MonoBehaviour
             //     rot = Quaternion.Euler(15, 90, 0);
             //     break;
             case 3:
+                rot = Quaternion.Euler(15, 90, -90);
+                break;
+            case 4:
+                rot = Quaternion.Euler(15, 90, 0);
+                break;
+            case 5:
                 rot = Quaternion.Euler(15, 90, -90);
                 break;
             default:
@@ -325,12 +331,14 @@ public class WallManager : MonoBehaviour
                 return 1;
             case "tri":
                 return 2;
-            // case "heptcone":
-            //     return 3;
             // case "icosph":
             //     return 4;
             case "astro":
                 return 3;
+            case "donut":
+                return 4;
+            case "egg":
+                return 5;
             default:
                 return 0;
         }

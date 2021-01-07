@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
             for (int i = 2; i < shpCount+1; i++)
             {
                 if(i % 2 == 0){
-                    GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.5f, 1.75f * (1.57142f*(shpCount -1*(shpCount-1)))), Rotate(shpNum[numTemp]));    //spawn shp on left
+                    GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.69789f, 1.75f * (1.57142f*(shpCount -1*(shpCount-1)))), Rotate(shpNum[numTemp]));    //spawn shp on left
                     shpTemp.GetComponent<ShapeMovement>().currentLane = (2 * i - (3 - ((laneNum-5) / 2)));   //Lane = 2*SpawnOrder - 3    (3 has adjustments (must decrease by 1 every new 2 lanes))  
                     currShps.Add(shpTemp);
                     // if(shpTemp.transform.childCount == 1){
@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    Quaternion Rotate(int shpNum)
+    Quaternion Rotate(int shpNum)       //for shapes
     {
         Quaternion rot;
         switch (shpNum)
@@ -207,7 +207,12 @@ public class GameManager : MonoBehaviour
             case 3:
                 rot = Quaternion.Euler(0, 0, 0);
                 break;
-
+            case 4:
+                rot = Quaternion.Euler(15, 90, 0);
+                break;
+            case 5:
+                rot = Quaternion.Euler(0, 0, 0);
+                break;
             default: 
                 rot = Quaternion.identity;
                 break;
