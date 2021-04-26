@@ -172,7 +172,7 @@ MonoBehaviour:
   shpNum: 
   shpCount: 0
   laneNum: 0
-  levelNum: 16
+  levelNum: 24
   wallNum: 0
   speedLerp: 0
   distLerp: 0
