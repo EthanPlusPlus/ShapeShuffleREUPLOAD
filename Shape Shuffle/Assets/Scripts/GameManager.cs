@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {   
     CameraManager cm;
+    WallManager wm;
 
     public GameObject[] shps;
     public ParticleSystem[] psConfetti;
@@ -14,10 +15,13 @@ public class GameManager : MonoBehaviour
 
     public List<int> shpNum;
 
+    [HideInInspector] public string[,] colourPal;
+
     public int shpCount;
     public int laneNum = 0;
     public int levelNum;
     public int wallNum;
+    public int colourCur;
 
 
     float speedMax10, speedMin10, speedMin20, speedMax20, speedMin50, speedMax50;
@@ -32,10 +36,12 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         cm = (CameraManager)FindObjectOfType(typeof(CameraManager));
+        wm = (WallManager)FindObjectOfType(typeof(WallManager));
     }
 
     void Start()
     {
+
         //levelNum = 9;
         speedMin10 = 700;
         speedMax10 = 840;
@@ -218,5 +224,23 @@ public class GameManager : MonoBehaviour
                 break;
         }
         return rot;
+    }
+
+    void ColourSet()
+    {
+        colourPal = new string[,] { //road, shape, wall, bg
+            {"#FF6969", "#EB9C59", "#FFEFAB", "#BA54E8"},   //red (default)
+            {"#5ABAFF", "#684BEB", "#46E8AC", "#75FF4D"},   //light blue
+            {"#44FE4A", "#E1E833", "#FFC738", "#38EBD0"},    //green
+            {"#FFD94B", "#E88838", "#FF433D", "#BEEB3D"},    //yellow
+            {"#A64812", "#F2913D", "#D97925", "#F2913D"}};  //orange
+    
+        colourCur = Random.Range(0, wm.walls.Length);
+
+        for (int i = 0; i < currShps.Count; i++)
+        {
+            currShps[i].GetComponent<MeshRenderer>().materials[0] = 
+                new Material(Shader.Find()))
+        }
     }
 }
