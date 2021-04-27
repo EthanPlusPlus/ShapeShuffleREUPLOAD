@@ -103,7 +103,7 @@ public class ShapeMovement : MonoBehaviour
 
         if(leftSwiped){
             shapePos.z = shapePos.z + 2.75f;
-            transform.position = shapePos;
+            LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
             lMoves -= 1;
             rMoves += 1;
             --currentLane;
@@ -112,7 +112,7 @@ public class ShapeMovement : MonoBehaviour
         
         if(rightSwiped){
             shapePos.z = shapePos.z - 2.75f;
-            transform.position = shapePos;
+            LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
             lMoves += 1;
             rMoves -= 1;
             ++currentLane;
@@ -124,7 +124,8 @@ public class ShapeMovement : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
             if(lMoves > 0){          //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
                 shapePos.z = shapePos.z + 2.75f;
-                transform.position = shapePos;
+                LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
+                // transform.position = shapePos;
                 lMoves -= 1;
                 rMoves += 1;
                 --currentLane;
@@ -132,7 +133,8 @@ public class ShapeMovement : MonoBehaviour
         }else if(Input.GetKeyDown(KeyCode.RightArrow)){
             if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
                 shapePos.z = shapePos.z - 2.75f;
-                transform.position = shapePos;
+                LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
+                //transform.position = shapePos;
                 lMoves += 1;
                 rMoves -= 1;
                 ++currentLane;
