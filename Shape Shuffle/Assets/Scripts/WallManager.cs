@@ -19,7 +19,7 @@ public class WallManager : MonoBehaviour
     GameObject wallParent;
     GameObject correctWall, wallParentClean;
 
-    [SerializeField] GameObject road;
+    [HideInInspector] public GameObject road;
 
     float currDist;
     

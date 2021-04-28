@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     public List<int> shpNum;
 
-    [HideInInspector] public string[,] colourPal;
+    string[,] colourPal;
 
     public int shpCount;
     public int laneNum = 0;
@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
         Difficulty();
 
         ChooseMesh();
+        Invoke("ColourSet", 1);
     }
 
     void Update()
@@ -235,12 +236,33 @@ public class GameManager : MonoBehaviour
             {"#FFD94B", "#E88838", "#FF433D", "#BEEB3D"},    //yellow
             {"#A64812", "#F2913D", "#D97925", "#F2913D"}};  //orange
     
-        colourCur = Random.Range(0, wm.walls.Length);
+        colourCur = Random.Range(0, 4);
+
+        Color shpColour = new Color();
+        Color wallColour = new Color();
+        Color roadColour = new Color();
+        Color bgColour = new Color();
+        ColorUtility.TryParseHtmlString(colourPal[colourCur, 1], out shpColour);
+        ColorUtility.TryParseHtmlString(colourPal[colourCur, 2], out wallColour);
+        ColorUtility.TryParseHtmlString(colourPal[colourCur, 0], out roadColour);
+        ColorUtility.TryParseHtmlString(colourPal[colourCur, 3], out bgColour);
 
         for (int i = 0; i < currShps.Count; i++)
         {
-            currShps[i].GetComponent<MeshRenderer>().materials[0] = 
-                new Material(Shader.Find()))
+            if(currShps[i].transform.childCount == 0){
+                currShps[i].GetComponent<MeshRenderer>().materials[0].SetColor("shpColour", shpColour);
+            }else{
+                currShps[i].transform.GetChild(0).GetComponent<MeshRenderer>().materials[0].SetColor("shpColour", shpColour);
+            }
+
+            wm.road.GetComponent<MeshRenderer>().materials[0].SetColor("planeColour", roadColour);
+
+            Camera.main.GetComponent<Camera>().backgroundColor = bgColour;
+        }
+
+        for (int i = 0; i < wm.wallShps.Count; i++)
+        {
+            wm.wallShps[i].GetComponent<MeshRenderer>().materials[0].SetColor("wallColour", wallColour);
         }
     }
 }
