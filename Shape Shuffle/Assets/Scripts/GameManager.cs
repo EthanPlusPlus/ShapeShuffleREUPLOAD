@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
         }
 
         //shpNum = Random.Range(0, 3);
-        GameObject firstShp = Instantiate(shps[shpNum[0]], new Vector3(7.06f, 38.5f), Rotate(shpNum[0]));
+        GameObject firstShp = Instantiate(shps[shpNum[0]], new Vector3(7.06f, 38.69789f), Rotate(shpNum[0]));
         firstShp.GetComponent<ShapeMovement>().currentLane = laneNum / 2;
         currShps.Add(firstShp);
         
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
                     // }
                     numTemp = numTemp + 1;
                 }else{
-                    GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.5f, -1.75f * (1.57142f*(shpCount -2))), Rotate(shpNum[numTemp]));                 //spawn on right
+                    GameObject shpTemp = Instantiate(shps[shpNum[numTemp]], new Vector3(7.06f, 38.69789f, -1.75f * (1.57142f*(shpCount -2))), Rotate(shpNum[numTemp]));                 //spawn on right
                     shpTemp.GetComponent<ShapeMovement>().currentLane = (2 * i - (3 - ((laneNum-5) / 2)));          //((2 + ((laneNum-5) / 2)) * i) - (3 + ((laneNum-5) / 2));
                     currShps.Add(shpTemp);
                     // if(shpTemp.transform.childCount == 1){
