@@ -57,16 +57,18 @@ public class ShapeMovement : MonoBehaviour
         xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
         yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
 
-        if(wallTrans.position.x - transform.position.x < gm.dist * 0.75f
-            || currentWall == 0){
-            accel = true;
+        if(currentWall == 0){
             r.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
+        }
+        else if(wallTrans.position.x - transform.position.x < gm.dist * 0.75f
+                && currentWall != 0){
+            accel = true;
+            r.AddForce(xVec * gm.speed * 0.9f, -yVec * gm.speed * 0.9f, 0);
         
         }else{
-            //if(currentWall != 0){
-                accel = false;
-                r.AddForce(-xVec * gm.speed * 3f, yVec * gm.speed * 3f, 0);
-            //}
+            accel = false;
+            r.AddForce(-xVec * gm.speed * 3f, yVec * gm.speed * 3f, 0);
+
         }
 
         
@@ -167,8 +169,10 @@ public class ShapeMovement : MonoBehaviour
         Move(shpR, wallTransform);
         
         if(transform.position.x > wallTransform.position.x){        //make offset to make delay or quicker reaction (+pos.x)
-            if(gm.allShpCorrect)
+            if(gm.allShpCorrect){
+                wm.WallExit(wallTransform.gameObject);
                 ++currentWall;
+            }
             else{
                 print("dead");
                 return;
