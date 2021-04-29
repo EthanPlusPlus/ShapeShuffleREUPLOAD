@@ -19,6 +19,7 @@ public class ShapeMovement : MonoBehaviour
 
     public bool clicked, leftSwiped, rightSwiped;
     public bool correctLane;
+    public bool accel;
 
     public GameObject mouseTemp;
 
@@ -42,22 +43,31 @@ public class ShapeMovement : MonoBehaviour
 
         shpR = GetComponent<Rigidbody>();
         shpT = GetComponent<Transform>();
-
-        Move(shpR);
     }
 
     void Update()
     {
+
         StartCoroutine(Shuffle());
         LaneDetect();
     }
 
-    public void Move(Rigidbody r)
+    public void Move(Rigidbody r, Transform wallTrans)
     {
         xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
         yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
 
-        r.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
+        if(wallTrans.position.x - transform.position.x < gm.dist * 0.75f
+            || currentWall == 0){
+            accel = true;
+            r.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
+        
+        }else{
+            //if(currentWall != 0){
+                accel = false;
+                r.AddForce(-xVec * gm.speed * 3f, yVec * gm.speed * 3f, 0);
+            //}
+        }
 
         
         
@@ -153,6 +163,8 @@ public class ShapeMovement : MonoBehaviour
         
 
         Transform wallTransform = wm.totalWalls[currentWall].transform;
+
+        Move(shpR, wallTransform);
         
         if(transform.position.x > wallTransform.position.x){        //make offset to make delay or quicker reaction (+pos.x)
             if(gm.allShpCorrect)

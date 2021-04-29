@@ -43,12 +43,12 @@ public class GameManager : MonoBehaviour
     {
 
         //levelNum = 9;
-        speedMin10 = 700;
-        speedMax10 = 840;
-        speedMin20 = 875;
-        speedMax20 = 1050;
-        speedMin50 = 1750;
-        speedMax50 = 2100;
+        speedMin10 = 7 / 2;
+        speedMax10 = 8.4f / 2;
+        speedMin20 = 8.75f / 2;
+        speedMax20 = 10.50f / 2;
+        speedMin50 = 17.50f / 2;
+        speedMax50 = 21.00f / 2;
         distMin10 = 40;
         distMax10 = 30;
         distMin20 = 70;
@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         CheckShapes();
+        cm.CamMove();
     }
 
     void Difficulty()
@@ -95,21 +96,21 @@ public class GameManager : MonoBehaviour
             distLerp = (float)levelNum / 20;
             dist = Mathf.Lerp(distMin20, distMax20, distLerp);
         }
-        else if(levelNum > 20 && levelNum < 50){
+        else if(levelNum > 20){
             laneNum = 7;
 
             shpCount = 3;
 
             wallNum = 10;
 
-            speedLerp = (float)levelNum / 50;
+            speedLerp = (float)levelNum / 50;// * (levelNum * Random.Range(1, 5));
             speed = Mathf.Lerp(speedMin50, speedMax50, speedLerp);
 
             distLerp = (float)levelNum / 50;
             dist = Mathf.Lerp(distMin50, distMax50, distLerp);
         }
         
-        cm.CamMove();
+        //cm.CamMove();
     }
 
     void ChooseMesh()

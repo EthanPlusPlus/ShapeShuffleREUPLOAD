@@ -6,6 +6,7 @@ public class CameraManager : MonoBehaviour
 {
     GameManager gm;
     WallManager wm;
+    ShapeMovement sm;
 
     Rigidbody camR;
 
@@ -27,13 +28,14 @@ public class CameraManager : MonoBehaviour
     {
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
         wm = (WallManager)FindObjectOfType(typeof(WallManager));
+        //sm = gm.currShps[0].gameObject.GetComponent<ShapeMovement>();
 
         camR = GetComponent<Rigidbody>();
     }
 
     void Start()
     {
-        
+        sm = gm.currShps[0].gameObject.GetComponent<ShapeMovement>();
     }
 
     void Update()
@@ -48,7 +50,14 @@ public class CameraManager : MonoBehaviour
         xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
         yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
 
-        camR.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
+        if(sm.accel){
+            camR.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
+        }
+        else{
+            //if(sm.currentWall != 0){
+                camR.AddForce(-xVec * gm.speed * 3f, yVec * gm.speed * 3, 0);
+            //}
+        }
     }
 
     void ZoomOut(float speed, float distOffset)

@@ -5128,6 +5128,7 @@ MonoBehaviour:
   leftSwiped: 0
   rightSwiped: 0
   correctLane: 0
+  accel: 0
   mouseTemp: {fileID: 77617100}
 --- !u!54 &364639081
 Rigidbody:
