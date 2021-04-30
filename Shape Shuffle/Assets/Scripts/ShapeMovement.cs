@@ -159,7 +159,12 @@ public class ShapeMovement : MonoBehaviour
     {
         if(currentWall >= gm.wallNum){
             gm.won = true;
-            GetComponent<MeshRenderer>().enabled = false;
+            if(transform.childCount == 0){
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+            }else{
+                gameObject.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+            }
+            //GetComponent<MeshRenderer>().enabled = false;
             return;
         }
         

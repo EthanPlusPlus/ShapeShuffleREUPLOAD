@@ -235,9 +235,31 @@ public class GameManager : MonoBehaviour
             {"#5ABAFF", "#684BEB", "#46E8AC", "#75FF4D"},   //light blue
             {"#44FE4A", "#E1E833", "#FFC738", "#38EBD0"},    //green
             {"#FFD94B", "#E88838", "#FF433D", "#BEEB3D"},    //yellow
-            {"#A64812", "#F2913D", "#D97925", "#F2913D"}};  //orange
-    
-        colourCur = Random.Range(0, 4);
+            {"#A64812", "#F2913D", "#D97925", "#F2913D"},     //orange
+            {"#91D7F2", "#03A688", "#A3C1C9", "#F2F2F2"},
+            {"#BF7839", "#F23005", "#F2D338", "#3C3F40"},
+            {"#F20505", "#D9D0C1", "#8A00E5", "#63BBF2"},
+            {"#D9AA52", "#FAF4EA", "#0D0D0D", "#B2B6B8"},
+            {"#24A669", "#59331D", "#025930", "#F8F1E9"},
+            {"#986AD9", "#0A0626", "#5632A6", "#413473"},
+            {"#BFBEBD", "#F2D16D", "#D96704", "#121212"},
+            {"#A60522", "#1BBF15", "#F2B807", "#F2360C"},
+            {"#D96690", "#88E8F2", "#F2C9E0", "#89C2D9"},
+            {"#734C36", "#F2DEA2", "#D9BD6A", "#BFCDD9"},
+            {"#0A6ABF", "#94F250", "#35BDF2", "#0D0D0D"},
+            {"#F26D78", "#656D73", "#048ABF", "#827CA6"},
+            {"#0D0D0D", "#F2E205", "#84BF04", "#F23005"},
+            {"#155259", "#BFD9D9", "#012326", "#F2F2F2"},
+            {"#101C26", "#000000", "#2A4359", "#99D9F2"},
+            {"#070C0D", "#14261B", "#225459", "#80ADBF"},
+            {"#2F3973", "#F2F2F2", "#2F3973", "#111826"},
+            {"#BF6586", "#F2C4C4", "#F2AD94", "#73364C"},
+            {"#BF7636", "#7787A6", "#733E1F", "#D9B6A3"},
+            {"#9CB6D9", "#1E2D40", "#A6786D", "#7897BF"},
+            {"#F299A9", "#F2055C", "#F2055C", "#4AD9CA"},
+            {"#B3ECF2", "#F277A4", "#732240", "#D9486E"}};  
+
+        colourCur = Random.Range(0, colourPal.Length / 4);
 
         Color shpColour = new Color();
         Color wallColour = new Color();
@@ -261,9 +283,13 @@ public class GameManager : MonoBehaviour
             Camera.main.GetComponent<Camera>().backgroundColor = bgColour;
         }
 
-        for (int i = 0; i < wm.wallShps.Count; i++)
+        for (int i = 0; i < wm.totalWalls.Count; i++)
         {
-            wm.wallShps[i].GetComponent<MeshRenderer>().materials[0].SetColor("wallColour", wallColour);
+            GameObject wall = wm.totalWalls[i];
+            for (int j = 0; j < wall.transform.childCount; j++)
+            {
+                wall.transform.GetChild(j).GetComponent<MeshRenderer>().materials[0].SetColor("wallColour", wallColour);
+            }
         }
     }
 }
