@@ -118,7 +118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721128106147241474}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f762be401a8890f418513c1b85a489bb, type: 3}
   m_Name: 
@@ -129,11 +129,12 @@ MonoBehaviour:
   rMoves: 0
   currentLane: 0
   currentWall: 0
-  mousePos: {x: 0, y: 0, z: 0}
-  mouseStartClick: {x: 0, y: 0, z: 0}
-  mouseTempPos: {x: 0, y: 0}
+  startTouchPos: {x: 0, y: 0, z: 0}
+  touchStartClick: {x: 0, y: 0, z: 0}
+  touchTempPos: {x: 0, y: 0}
   clicked: 0
   leftSwiped: 0
   rightSwiped: 0
   correctLane: 0
-  mouseTemp: {fileID: 0}
+  accel: 0
+  touchTemp: {fileID: 0}

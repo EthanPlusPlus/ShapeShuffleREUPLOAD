@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     float speedMax10, speedMin10, speedMin20, speedMax20, speedMin50, speedMax50;
     float distMin10, distMax10, distMin20, distMax20, distMin50, distMax50; 
 
+    public float speedPhone;
     public float speedLerp, distLerp;            //manipulate this
     public float speed, dist;         //output this
 
@@ -43,12 +45,12 @@ public class GameManager : MonoBehaviour
     {
 
         //levelNum = 9;
-        speedMin10 = 7 / 2;
-        speedMax10 = 8.4f / 2;
-        speedMin20 = 8.75f / 2;
-        speedMax20 = 10.50f / 2;
-        speedMin50 = 17.50f / 2;
-        speedMax50 = 21.00f / 2;
+        speedMin10 = 3.5f;
+        speedMax10 = 4.2f;
+        speedMin20 = 4.375f;
+        speedMax20 = 5.25f;
+        speedMin50 = 8.75f;
+        speedMax50 = 10.5f;
         distMin10 = 45;
         distMax10 = 35;
         distMin20 = 90;
@@ -58,13 +60,12 @@ public class GameManager : MonoBehaviour
         Difficulty();
 
         ChooseMesh();
-        Invoke("ColourSet", 1);
+        //Invoke("ColourSet", 1);
     }
 
     void Update()
     {
         CheckShapes();
-        cm.CamMove();
     }
 
     void Difficulty()
@@ -165,6 +166,8 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        ColourSet();
 
         //shps[shpNum].SetActive(true);
     }

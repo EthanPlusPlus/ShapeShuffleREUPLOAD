@@ -6,7 +6,7 @@ public class CameraManager : MonoBehaviour
 {
     GameManager gm;
     WallManager wm;
-    ShapeMovement sm;
+    [HideInInspector] public ShapeMovement sm;
 
     Rigidbody camR;
 
@@ -35,7 +35,7 @@ public class CameraManager : MonoBehaviour
 
     void Start()
     {
-        sm = gm.currShps[0].gameObject.GetComponent<ShapeMovement>();
+        // sm = gm.currShps[0].gameObject.GetComponent<ShapeMovement>();
     }
 
     void Update()
@@ -51,13 +51,13 @@ public class CameraManager : MonoBehaviour
         yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
 
         if(sm.currentWall == 0){
-            camR.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
+            camR.AddForce(xVec * gm.speed * gm.speedPhone, -yVec * gm.speed * gm.speedPhone, 0);
         }
         else if(sm.accel){
-            camR.AddForce(xVec * gm.speed * 0.9f, -yVec * gm.speed * 0.9f, 0);
+            camR.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);
         }
         else{
-            camR.AddForce(-xVec * gm.speed * 3f, yVec * gm.speed * 3, 0);
+            camR.AddForce(-xVec * gm.speed * 3f * gm.speedPhone, yVec * gm.speed * 3 * gm.speedPhone, 0);
         }
     }
 
@@ -93,7 +93,7 @@ public class CameraManager : MonoBehaviour
                 startPos = transform.position;
                 startRotX = transform.rotation.x;
                 startTime = Time.time;
-                camR.AddForce(xVec * -gm.speed, yVec * gm.speed, 0);
+                camR.AddForce(xVec * -gm.speed * gm.speedPhone, yVec * gm.speed * gm.speedPhone, 0);
                 zoomGo.transform.SetParent(null);
 
                 StartCoroutine(Shake());
@@ -109,7 +109,7 @@ public class CameraManager : MonoBehaviour
                 startPos = transform.position;
                 startRotX = transform.rotation.x;
                 startTime = Time.time;
-                camR.AddForce(xVec * -gm.speed, yVec * gm.speed, 0);
+                camR.AddForce(xVec * -gm.speed * gm.speedPhone, yVec * gm.speed * gm.speedPhone, 0);
                 zoomGo.transform.SetParent(null);
                 
                 List<GameObject> tw = new List<GameObject>();
