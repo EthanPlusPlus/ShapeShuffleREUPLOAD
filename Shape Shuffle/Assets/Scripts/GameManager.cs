@@ -49,12 +49,12 @@ public class GameManager : MonoBehaviour
         speedMax20 = 10.50f / 2;
         speedMin50 = 17.50f / 2;
         speedMax50 = 21.00f / 2;
-        distMin10 = 40;
-        distMax10 = 30;
-        distMin20 = 70;
-        distMax20 = 40;
-        distMin50 = 80; //20
-        distMax50 = 60; //10
+        distMin10 = 45;
+        distMax10 = 35;
+        distMin20 = 90;
+        distMax20 = 70;
+        distMin50 = 85; //20
+        distMax50 = 65; //10
         Difficulty();
 
         ChooseMesh();

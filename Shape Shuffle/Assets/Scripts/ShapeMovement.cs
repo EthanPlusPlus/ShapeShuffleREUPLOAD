@@ -40,9 +40,17 @@ public class ShapeMovement : MonoBehaviour
 
     void Start()
     {
-
         shpR = GetComponent<Rigidbody>();
         shpT = GetComponent<Transform>();
+
+        int openLanes = gm.laneNum - gm.shpCount;
+        if(openLanes % 2 == 0){
+            lMoves = openLanes / 2;
+            rMoves = openLanes / 2;
+        }else{
+            lMoves = openLanes / 2;
+            rMoves = openLanes / 2 + 1; 
+        }
     }
 
     void Update()
@@ -69,20 +77,6 @@ public class ShapeMovement : MonoBehaviour
             accel = false;
             r.AddForce(-xVec * gm.speed * 3f, yVec * gm.speed * 3f, 0);
 
-        }
-
-        
-        
-        
-        //detect lane
-
-        int openLanes = gm.laneNum - gm.shpCount;
-        if(openLanes % 2 == 0){
-            lMoves = openLanes / 2;
-            rMoves = openLanes / 2;
-        }else{
-            lMoves = openLanes / 2;
-            rMoves = openLanes / 2 + 1; 
         }
     }
 
@@ -116,8 +110,8 @@ public class ShapeMovement : MonoBehaviour
         if(leftSwiped){
             shapePos.z = shapePos.z + 2.75f;
             LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
-            lMoves -= 1;
-            rMoves += 1;
+            --lMoves;
+            ++rMoves;
             --currentLane;
             leftSwiped = false;
         }
@@ -125,21 +119,20 @@ public class ShapeMovement : MonoBehaviour
         if(rightSwiped){
             shapePos.z = shapePos.z - 2.75f;
             LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
-            lMoves += 1;
-            rMoves -= 1;
+            ++lMoves;
+            --rMoves;
             ++currentLane;
             rightSwiped = false;
         }
 
         //key press input
-
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
             if(lMoves > 0){          //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
                 shapePos.z = shapePos.z + 2.75f;
                 LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
                 // transform.position = shapePos;
-                lMoves -= 1;
-                rMoves += 1;
+                --lMoves;
+                ++rMoves;
                 --currentLane;
             }
         }else if(Input.GetKeyDown(KeyCode.RightArrow)){
@@ -147,8 +140,8 @@ public class ShapeMovement : MonoBehaviour
                 shapePos.z = shapePos.z - 2.75f;
                 LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
                 //transform.position = shapePos;
-                lMoves += 1;
-                rMoves -= 1;
+                ++lMoves;
+                --rMoves;
                 ++currentLane;
             }
         }
