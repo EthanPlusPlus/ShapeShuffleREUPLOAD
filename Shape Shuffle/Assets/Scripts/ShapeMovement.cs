@@ -19,6 +19,7 @@ public class ShapeMovement : MonoBehaviour
 
     public bool clicked, leftSwiped, rightSwiped;
     public bool correctLane;
+    public bool accel;
 
     public GameObject mouseTemp;
 
@@ -39,30 +40,8 @@ public class ShapeMovement : MonoBehaviour
 
     void Start()
     {
-
         shpR = GetComponent<Rigidbody>();
         shpT = GetComponent<Transform>();
-
-        Move(shpR);
-    }
-
-    void Update()
-    {
-        StartCoroutine(Shuffle());
-        LaneDetect();
-    }
-
-    public void Move(Rigidbody r)
-    {
-        xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
-        yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
-
-        r.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
-
-        
-        
-        
-        //detect lane
 
         int openLanes = gm.laneNum - gm.shpCount;
         if(openLanes % 2 == 0){
@@ -71,6 +50,33 @@ public class ShapeMovement : MonoBehaviour
         }else{
             lMoves = openLanes / 2;
             rMoves = openLanes / 2 + 1; 
+        }
+    }
+
+    void Update()
+    {
+
+        StartCoroutine(Shuffle());
+        LaneDetect();
+    }
+
+    public void Move(Rigidbody r, Transform wallTrans)
+    {
+        xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
+        yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
+
+        if(currentWall == 0){
+            r.AddForce(xVec * gm.speed, -yVec * gm.speed, 0);
+        }
+        else if(wallTrans.position.x - transform.position.x < gm.dist * 0.75f
+                && currentWall != 0){
+            accel = true;
+            r.AddForce(xVec * gm.speed * 0.9f, -yVec * gm.speed * 0.9f, 0);
+        
+        }else{
+            accel = false;
+            r.AddForce(-xVec * gm.speed * 3f, yVec * gm.speed * 3f, 0);
+
         }
     }
 
@@ -104,8 +110,8 @@ public class ShapeMovement : MonoBehaviour
         if(leftSwiped){
             shapePos.z = shapePos.z + 2.75f;
             LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
-            lMoves -= 1;
-            rMoves += 1;
+            --lMoves;
+            ++rMoves;
             --currentLane;
             leftSwiped = false;
         }
@@ -113,21 +119,20 @@ public class ShapeMovement : MonoBehaviour
         if(rightSwiped){
             shapePos.z = shapePos.z - 2.75f;
             LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
-            lMoves += 1;
-            rMoves -= 1;
+            ++lMoves;
+            --rMoves;
             ++currentLane;
             rightSwiped = false;
         }
 
         //key press input
-
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
             if(lMoves > 0){          //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
                 shapePos.z = shapePos.z + 2.75f;
                 LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
                 // transform.position = shapePos;
-                lMoves -= 1;
-                rMoves += 1;
+                --lMoves;
+                ++rMoves;
                 --currentLane;
             }
         }else if(Input.GetKeyDown(KeyCode.RightArrow)){
@@ -135,8 +140,8 @@ public class ShapeMovement : MonoBehaviour
                 shapePos.z = shapePos.z - 2.75f;
                 LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
                 //transform.position = shapePos;
-                lMoves += 1;
-                rMoves -= 1;
+                ++lMoves;
+                --rMoves;
                 ++currentLane;
             }
         }
@@ -158,10 +163,14 @@ public class ShapeMovement : MonoBehaviour
         
 
         Transform wallTransform = wm.totalWalls[currentWall].transform;
+
+        Move(shpR, wallTransform);
         
         if(transform.position.x > wallTransform.position.x){        //make offset to make delay or quicker reaction (+pos.x)
-            if(gm.allShpCorrect)
+            if(gm.allShpCorrect){
+                wm.WallExit(wallTransform.gameObject);
                 ++currentWall;
+            }
             else{
                 print("dead");
                 return;

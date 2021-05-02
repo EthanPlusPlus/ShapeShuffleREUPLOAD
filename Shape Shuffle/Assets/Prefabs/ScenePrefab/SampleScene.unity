@@ -172,7 +172,7 @@ MonoBehaviour:
   shpNum: 
   shpCount: 0
   laneNum: 0
-  levelNum: 15
+  levelNum: 4
   wallNum: 0
   colourCur: 0
   speedLerp: 0
@@ -5128,6 +5128,7 @@ MonoBehaviour:
   leftSwiped: 0
   rightSwiped: 0
   correctLane: 0
+  accel: 0
   mouseTemp: {fileID: 77617100}
 --- !u!54 &364639081
 Rigidbody:

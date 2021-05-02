@@ -284,6 +284,11 @@ public class WallManager : MonoBehaviour
 
     }
 
+    public void WallExit(GameObject wallPassed)
+    {
+        wallPassed.LeanMoveX(-10, 3);
+    }
+
     Quaternion Rotate(int shpNum)   //for walls
     {
         Quaternion rot;
