@@ -13,15 +13,15 @@ public class ShapeMovement : MonoBehaviour
     public int currentLane, currentWall;
 
 
-    public Vector3 mousePos;
-    public Vector3 mouseStartClick;
-    public Vector2 mouseTempPos;
+    public Vector3 touchPos;
+    public Vector3 touchStartClick;
+    public Vector2 touchTempPos;
 
     public bool clicked, leftSwiped, rightSwiped;
     public bool correctLane;
     public bool accel;
 
-    public GameObject mouseTemp;
+    public GameObject touchTemp;
 
     Rigidbody shpR;
     Transform shpT;
@@ -31,7 +31,7 @@ public class ShapeMovement : MonoBehaviour
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
         wm = (WallManager)FindObjectOfType(typeof(WallManager));
 
-        mouseTemp = GameObject.FindGameObjectWithTag("mouseTemp");
+        touchTemp = GameObject.FindGameObjectWithTag("mouseTemp");
 
         // if(transform.position.z == 0){
         //     gm.centreShp = gameObject;
@@ -83,28 +83,37 @@ public class ShapeMovement : MonoBehaviour
     IEnumerator Shuffle()
     {
         //mouse swipe input
-
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseTemp.transform.position = 10 * new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        mouseTempPos = mouseTemp.transform.position;    
+        // touchTemp.transform.position = 10 * new Vector2(touc)//Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        // touchTempPos = touchTemp.transform.position;    
 
         Vector3 shapePos = transform.position;
 
-        if(Input.GetMouseButtonDown(0)){
-            
-                mouseStartClick = mouseTempPos;
+        if(Input.touchCount > 0){
+            // if(Input.GetMouseButtonDown(0)){
+                Touch touch = Input.GetTouch(0);
+                touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+
+                touchTemp.transform.position = 10 * new Vector2(touch.deltaPosition.x, touch.deltaPosition.y);//Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                touchTempPos = touchTemp.transform.position;
 
                 yield return new WaitForSeconds(0.1f);
 
-                if(mouseTempPos.x > 0){
+                touchStartClick = touchTempPos;
+
+                if(touchTempPos.x > 0){
+
                     if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
                         rightSwiped = true;
                     }
-                }else if(mouseTempPos.x < 0){
+
+                }else if(touchTempPos.x < 0){
+
                     if(lMoves > 0){       //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
                         leftSwiped = true;
                     }
+
                 }
+            //}
         }
 
         if(leftSwiped){
@@ -172,7 +181,7 @@ public class ShapeMovement : MonoBehaviour
                 ++currentWall;
             }
             else{
-                print("dead");
+                //print("dead");
                 return;
             }
         }
