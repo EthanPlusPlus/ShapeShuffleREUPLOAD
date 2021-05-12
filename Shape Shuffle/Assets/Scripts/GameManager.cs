@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        levelNum = PlayerPrefs.GetInt("Level", 1);
 
         //levelNum = 9;
         speedMin10 = 3.5f;
