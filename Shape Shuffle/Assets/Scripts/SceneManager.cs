@@ -27,7 +27,7 @@ public class SceneManager : MonoBehaviour
     {
         //PlayerPrefs.DeleteKey("Level");
         
-        levelTxt.text = PlayerPrefs.GetInt("Level", 1).ToString();
+        levelTxt.text = PlayerPrefs.GetInt("Level", 1).ToString() + "   " + gm.colourPal[gm.colourCur,0] + gm.colourPal[gm.colourCur,1] + gm.colourPal[gm.colourCur,2] + gm.colourPal[gm.colourCur,3];
     }
 
     void Update()

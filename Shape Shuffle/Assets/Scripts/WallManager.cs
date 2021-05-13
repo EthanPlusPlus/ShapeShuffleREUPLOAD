@@ -57,6 +57,7 @@ public class WallManager : MonoBehaviour
         startRoadPos.transform.localScale = new Vector3(scaleXRoad, 1, 1);
         road.transform.localScale = new Vector3(road.transform.localScale.x, 1, (float)(gm.laneNum * 125.066) / 50.0266f);
 
+        gm.ColourSet();
     }
 
     void Build(float dist)    //leftz -21.56 centrez -13.3278 rightz -27.054 filler1 -22.935 filler2 -25.682

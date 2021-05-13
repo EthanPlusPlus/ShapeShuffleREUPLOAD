@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     public List<int> shpNum;
 
-    string[,] colourPal;
+    [HideInInspector] public string[,] colourPal;
 
     public int shpCount;
     public int laneNum = 0;
@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        ColourSet();
+        //ColourSet();
 
         //shps[shpNum].SetActive(true);
     }
@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
         return rot;
     }
 
-    void ColourSet()
+    public void ColourSet()
     {
         colourPal = new string[,] { //road, shape, wall, bg
             {"#FF6969", "#EB9C59", "#FFEFAB", "#BA54E8"},   //red (default)
@@ -289,10 +289,11 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < wm.totalWalls.Count; i++)
         {
-            GameObject wall = wm.totalWalls[i];
-            for (int j = 0; j < wall.transform.childCount; j++)
+            //;
+            for (int j = 0; j < wm.totalWalls[i].transform.childCount; j++)
             {
-                wall.transform.GetChild(j).GetComponent<MeshRenderer>().materials[0].SetColor("wallColour", wallColour);
+                
+                wm.totalWalls[i].transform.GetChild(j).GetComponent<MeshRenderer>().materials[0].SetColor("wallColour", wallColour);
             }
         }
     }
