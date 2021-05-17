@@ -27,7 +27,7 @@ public class SceneManager : MonoBehaviour
     {
         //PlayerPrefs.DeleteKey("Level");
         
-        levelTxt.text = PlayerPrefs.GetInt("Level", 1).ToString() + "   " + gm.colourPal[gm.colourCur,0] + gm.colourPal[gm.colourCur,1] + gm.colourPal[gm.colourCur,2] + gm.colourPal[gm.colourCur,3];
+        levelTxt.text = PlayerPrefs.GetInt("Level", 1).ToString();
     }
 
     void Update()
@@ -40,6 +40,7 @@ public class SceneManager : MonoBehaviour
             cm.CamMove();
 
             OnWon();        //check won
+            OnLost();
         }
     }
 
@@ -67,17 +68,19 @@ public class SceneManager : MonoBehaviour
         if(gm.won){ 
             completedTxt.enabled = true;
 
-            Invoke("LoadSccene", 3);
+            Invoke("LoadNextSccene", 3);
             
         }
     }
 
-    void IncreaseLvl()
+    void OnLost()
     {
-
+        if(gm.lost){
+            Invoke("LoadSameSccene", 3);
+        }
     }
 
-    void LoadSccene()
+    void LoadNextSccene()
     {
         
         if(!runOnce){
@@ -94,4 +97,15 @@ public class SceneManager : MonoBehaviour
         }
         
     }
+
+    void LoadSameSccene()
+    {
+        if(!runOnce){
+            gm.lost = false;
+            playGame = false;
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            runOnce = true;
+        }
+    } 
 }

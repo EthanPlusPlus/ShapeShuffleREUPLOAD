@@ -22,6 +22,7 @@ public class ShapeMovement : MonoBehaviour
     public bool clicked, leftSwiped, rightSwiped;
     public bool correctLane;
     public bool accel;
+    bool runOnce = false;
 
     public GameObject touchTemp;
 
@@ -60,6 +61,7 @@ public class ShapeMovement : MonoBehaviour
 
         Shuffle();
         LaneDetect();
+        Wind();
     }
 
     public void Move(Rigidbody r, Transform wallTrans)
@@ -84,11 +86,15 @@ public class ShapeMovement : MonoBehaviour
 
     void Shuffle()
     {
+        if(gm.lost)
+            return;
+
         //swipe input
         
         Vector3 shapePos = transform.position;
 
         const float MAX_SWIPE_TIME = 3f;
+        const float MIN_SWIPE_TIME = 0.1f;
         const float MIN_SWIPE_DISTANCE = 0f;
 
         if(Input.touchCount > 0){
@@ -99,7 +105,7 @@ public class ShapeMovement : MonoBehaviour
                     startTime = Time.time;
                 }
                 if(t.phase == TouchPhase.Ended){
-                    if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
+                    if (Time.time - startTime > MAX_SWIPE_TIME || Time.time - startTime < MIN_SWIPE_TIME) // press too long
                         return;
                 
                     Vector2 endPos = new Vector2(t.position.x/(float)Screen.width, t.position.y/(float)Screen.width);
@@ -206,6 +212,9 @@ public class ShapeMovement : MonoBehaviour
 
         Transform wallTransform = wm.totalWalls[currentWall].transform;
 
+        if(gm.lost)
+            return;
+
         Move(shpR, wallTransform);
         
         if(transform.position.x > wallTransform.position.x){        //make offset to make delay or quicker reaction (+pos.x)
@@ -237,6 +246,22 @@ public class ShapeMovement : MonoBehaviour
             gm.lost = true;
             shpR.AddForce(new Vector3(-500, Random.Range(300, 500), Random.Range(-700, 700)));
         }
+    }
+
+    void Wind()
+    {
+        TrailRenderer tr;
+            
+        tr = GetComponent<TrailRenderer>();
+        
+        if(accel){
+            if(tr.time < 0.42f * gm.levelNum*0.5f)
+                tr.time += 0.001f;
+        }else{
+            if(tr.time > 0)
+                tr.time -= 0.01f;
+        }
+         
     }
 
 }
