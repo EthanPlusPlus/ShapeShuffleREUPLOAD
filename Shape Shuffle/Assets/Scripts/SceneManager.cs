@@ -5,7 +5,7 @@ using UnityEngine.UI;
 //using UnityEngine.SceneManagement;
 
 public class SceneManager : MonoBehaviour
-{
+{   //store inputType in PLayerPrefs
     [SerializeField] GameManager gm;
     [SerializeField] CameraManager cm;
     //[SerializeField] ShapeMovement sm;
@@ -13,8 +13,9 @@ public class SceneManager : MonoBehaviour
     [SerializeField] ShapeMovement[] sms;
 
     [SerializeField] Canvas mainCan;
-    [SerializeField] Text completedTxt, levelTxt, tap2playTxt;
- 
+    [SerializeField] Text completedTxt, levelTxt, tap2playTxt, swipeTxt, tapTxt;
+    [SerializeField] Button inputBtn;
+
     bool playGame;
     bool runOnce = false;
  
@@ -28,6 +29,9 @@ public class SceneManager : MonoBehaviour
         //PlayerPrefs.DeleteKey("Level");
         
         levelTxt.text = PlayerPrefs.GetInt("Level", 1).ToString();
+        gm.swipeInput = (bool)(PlayerPrefs.GetInt("InputType", 1) == 1);
+        print(gm.swipeInput);
+        UpdateInput();
     }
 
     void Update()
@@ -108,4 +112,42 @@ public class SceneManager : MonoBehaviour
             runOnce = true;
         }
     } 
+    
+
+    public void ShowSettings()
+    {
+        if(gm.showSettings){
+            inputBtn.gameObject.SetActive(false); 
+            gm.showSettings = false;
+        }else{
+            inputBtn.gameObject.SetActive(true);
+            gm.showSettings = true;
+        }
+    }
+
+    public void SwitchInput()
+    {
+        if(gm.swipeInput){
+            swipeTxt.enabled = false;
+            tapTxt.enabled = true;
+            gm.swipeInput = false;
+        }else{
+            swipeTxt.enabled = true;
+            tapTxt.enabled = false;
+            gm.swipeInput = true;
+        }
+
+        PlayerPrefs.SetInt("InputType", (gm.swipeInput ? 1 : 0));
+        print("saved" + PlayerPrefs.GetInt("InputType"));
+    }
+    void UpdateInput()
+    {
+        if(gm.swipeInput){
+            swipeTxt.enabled = true;
+            tapTxt.enabled = false;
+        }else{
+            swipeTxt.enabled = false;
+            tapTxt.enabled = true;
+        }
+    }
 }

@@ -107,6 +107,7 @@ MonoBehaviour:
   clicked: 0
   leftSwiped: 0
   rightSwiped: 0
+  tempRSwipe: 0
   correctLane: 0
   accel: 0
   touchTemp: {fileID: 0}
@@ -179,7 +180,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.42
+  m_Time: 0.5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

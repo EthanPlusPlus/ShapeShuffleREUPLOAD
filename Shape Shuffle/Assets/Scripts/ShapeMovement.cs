@@ -10,6 +10,8 @@ public class ShapeMovement : MonoBehaviour
 
     public float xVec, yVec;
     float startTime;
+    float swipeCooldn = 0.2f;
+    float tapCooldn = 0.2f;
 
     public int lMoves, rMoves;
     public int currentLane, currentWall;
@@ -19,10 +21,9 @@ public class ShapeMovement : MonoBehaviour
     public Vector3 touchStartClick;
     public Vector2 touchTempPos;
 
-    public bool clicked, leftSwiped, rightSwiped;
+    public bool clicked, leftSwiped, rightSwiped, tempRSwipe, tempRTap;
     public bool correctLane;
     public bool accel;
-    bool runOnce = false;
 
     public GameObject touchTemp;
 
@@ -58,7 +59,7 @@ public class ShapeMovement : MonoBehaviour
 
     void Update()
     {
-
+        StartCoroutine(Test());
         Shuffle();
         LaneDetect();
         Wind();
@@ -69,15 +70,16 @@ public class ShapeMovement : MonoBehaviour
         xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
         yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
 
-        if(currentWall == 0){
-            r.AddForce(xVec * gm.speed * gm.speedPhone, -yVec * gm.speed * gm.speedPhone, 0);
+        if(currentWall == 0){               //first wall
+            //r.AddForce(xVec * gm.speed * gm.speedPhone, -yVec * gm.speed * gm.speedPhone, 0);
+            r.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);
         }
         else if(wallTrans.position.x - transform.position.x < gm.dist * 0.75f
-                && currentWall != 0){
+                && currentWall != 0){       //first speed up
             accel = true;
             r.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);
-        
-        }else{
+
+        }else{                              //slow down
             accel = false;
             r.AddForce(-xVec * gm.speed * 3f * gm.speedPhone, yVec * gm.speed * 3f * gm.speedPhone, 0);
 
@@ -86,114 +88,171 @@ public class ShapeMovement : MonoBehaviour
 
     void Shuffle()
     {
-        if(gm.lost)
-            return;
+        // if(gm.lost)
+        //     yield return null;
 
         //swipe input
         
         Vector3 shapePos = transform.position;
+        //const float MAX_SWIPE_TIME = 3f;
+        //const float MIN_SWIPE_TIME = 0.1f;
+        //const float MIN_SWIPE_DISTANCE = 0f;
 
-        const float MAX_SWIPE_TIME = 3f;
-        const float MIN_SWIPE_TIME = 0.1f;
-        const float MIN_SWIPE_DISTANCE = 0f;
+        if(gm.swipeInput){
+            swipeCooldn += Time.deltaTime;
 
-        if(Input.touchCount > 0){
+            if(swipeCooldn < 0.1f)
+                return;
 
-                Touch t = Input.GetTouch(0);
-                if(t.phase == TouchPhase.Began){
-                    startTouchPos = new Vector2(t.position.x/(float)Screen.width, t.position.y/(float)Screen.width);
-                    startTime = Time.time;
-                }
-                if(t.phase == TouchPhase.Ended){
-                    if (Time.time - startTime > MAX_SWIPE_TIME || Time.time - startTime < MIN_SWIPE_TIME) // press too long
-                        return;
-                
-                    Vector2 endPos = new Vector2(t.position.x/(float)Screen.width, t.position.y/(float)Screen.width);
+            if(Input.touchCount > 0){
 
-				    Vector2 swipe = new Vector2(endPos.x - startTouchPos.x, endPos.y - startTouchPos.y);
+                    Touch t = Input.GetTouch(0);
+                    if(t.phase == TouchPhase.Began){
+                        startTouchPos = new Vector2(t.position.x/(float)Screen.width, t.position.y/(float)Screen.width);
+                        startTime = Time.time;
+                    }
+                    if(t.phase == TouchPhase.Ended){
+                        // if (Time.time - startTime > MAX_SWIPE_TIME) // press too long
+                        //     yield return null;
 
-                    if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
-                        return;
+                        Vector2 endPos = new Vector2(t.position.x/(float)Screen.width, t.position.y/(float)Screen.width);
+
+		    		    Vector2 swipe = new Vector2(endPos.x - startTouchPos.x, endPos.y - startTouchPos.y);
+
+                        // if (swipe.magnitude < MIN_SWIPE_DISTANCE) // Too short swipe
+                        //     yield return null;
 
 
-                    if (Mathf.Abs (swipe.x) > Mathf.Abs (swipe.y)) { // Horizontal swipe
-                        if (swipe.x > 0) {
-                            if(rMoves > 0)
-                                rightSwiped = true;
-					}
-                        else {
-                            if(lMoves > 0)
-                                leftSwiped = true;
-					    }
-				    }
-				
-                // else { // Vertical swipe                 //future use
-				// 	if (swipe.y > 0) {
-				// 		swipedUp = true;
-				// 	}
-				// 	else {
-				// 		swipedDown = true;
-				// 	}
-				// }
+                        if (Mathf.Abs (swipe.x) > Mathf.Abs (swipe.y)) { // Horizontal swipe
+                            if (swipe.x > 0) {
+                                if(rMoves > 0){
+                                    rightSwiped = true;
+                                }
+		    			    }
+                            else {
+                                if(lMoves > 0){
+                                    leftSwiped = true;
+                                }    
+		    			    }
+		    		    }
+    
+                    // else { // Vertical swipe                 //future use
+		    		// 	if (swipe.y > 0) {
+		    		// 		swipedUp = true;
+		    		// 	}
+		    		// 	else {
+		    		// 		swipedDown = true;
+		    		// 	}
+		    		// }
 
-                }
-                
-                
-                // if(touchStartClick.x < startTouchPos.x){
+                    }
 
-                //     if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
-                //         rightSwiped = true;
-                //     }
 
-                // }else if(touchStartClick.x > startTouchPos.x){
+                    // if(touchStartClick.x < startTouchPos.x){
 
-                //     if(lMoves > 0){       //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
-                //         leftSwiped = true;
-                //     }
+                    //     if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
+                    //         rightSwiped = true;
+                    //     }
 
-                // }
-            //}
-        }
+                    // }else if(touchStartClick.x > startTouchPos.x){
 
-        if(leftSwiped){
-            shapePos.z = shapePos.z + 2.75f;
-            LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
-            --lMoves;
-            ++rMoves;
-            --currentLane;
-            leftSwiped = false;
-        }
-        
-        if(rightSwiped){
-            shapePos.z = shapePos.z - 2.75f;
-            LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
-            ++lMoves;
-            --rMoves;
-            ++currentLane;
-            rightSwiped = false;
-        }
+                    //     if(lMoves > 0){       //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
+                    //         leftSwiped = true;
+                    //     }
 
-        //key press input
-        if(Input.GetKeyDown(KeyCode.LeftArrow)){
-            if(lMoves > 0){          //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
+                    // }
+                //}
+
+            }
+
+            if(leftSwiped){
                 shapePos.z = shapePos.z + 2.75f;
+                LeanTween.cancel(gameObject);
                 LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
-                // transform.position = shapePos;
                 --lMoves;
                 ++rMoves;
                 --currentLane;
+                if(tempRSwipe)
+                    swipeCooldn = 0;
+                tempRSwipe = false;
+                leftSwiped = false;
+
             }
-        }else if(Input.GetKeyDown(KeyCode.RightArrow)){
-            if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
+
+            if(rightSwiped){
                 shapePos.z = shapePos.z - 2.75f;
+                LeanTween.cancel(gameObject);
                 LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
-                //transform.position = shapePos;
                 ++lMoves;
                 --rMoves;
                 ++currentLane;
+                if(!tempRSwipe)
+                    swipeCooldn = 0;
+                tempRSwipe = true;
+                rightSwiped = false;
+
             }
         }
+        else{
+            //key press input
+            if(Input.touchCount > 0){
 
+                tapCooldn += Time.deltaTime;
+
+                if(tapCooldn < 0.1f)
+                    return;
+
+                Touch t = Input.GetTouch(0);
+                if(t.phase == TouchPhase.Began){
+
+                    if(t.position.x < Screen.width/2){    //lefr side
+
+                        if(lMoves > 0){          //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
+                            shapePos.z = shapePos.z + 2.75f;
+                            LeanTween.cancel(gameObject);
+                            LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
+                            // transform.position = shapePos;
+                            --lMoves;
+                            ++rMoves;
+                            --currentLane;
+                            if(tempRTap)
+                                tapCooldn = 0;
+                        }
+                    }else if(t.position.x > Screen.width/2){  //rigjt side
+
+                        if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
+                            shapePos.z = shapePos.z - 2.75f;
+                            LeanTween.cancel(gameObject);
+                            LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
+                            //transform.position = shapePos;
+                            ++lMoves;
+                            --rMoves;
+                            ++currentLane;
+                            if(!tempRTap)
+                                tapCooldn = 0;
+                        }
+                    }
+                
+                }
+            }
+                
+            
+    
+                
+            
+        }
+    }
+
+    IEnumerator Test()
+    {
+        if(Input.GetKeyDown(KeyCode.A)){
+            
+            print("left");yield return new WaitForSeconds(3);
+        }
+        if(Input.GetKeyDown(KeyCode.D)){
+            
+            print("right");yield return new WaitForSeconds(3);
+        }
     }
 
     void LaneDetect()
@@ -244,7 +303,7 @@ public class ShapeMovement : MonoBehaviour
     {
         if(col != null){
             gm.lost = true;
-            shpR.AddForce(new Vector3(-500, Random.Range(300, 500), Random.Range(-700, 700)));
+            shpR.AddForce(new Vector3(-700, Random.Range(300, 500), Random.Range(-700, 700)));
         }
     }
 

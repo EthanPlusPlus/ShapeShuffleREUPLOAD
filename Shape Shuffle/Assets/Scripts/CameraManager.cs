@@ -51,7 +51,8 @@ public class CameraManager : MonoBehaviour
         yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
 
         if(sm.currentWall == 0){
-            camR.AddForce(xVec * gm.speed * gm.speedPhone, -yVec * gm.speed * gm.speedPhone, 0);
+            //camR.AddForce(xVec * gm.speed * gm.speedPhone, -yVec * gm.speed * gm.speedPhone, 0);
+            camR.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);
         }
         else if(sm.accel){
             camR.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);

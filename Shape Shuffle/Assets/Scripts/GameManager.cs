@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
 
     public bool lost, won;
     public bool allShpCorrect;
+    public bool swipeInput = true;
+    public bool showSettings = true;
     
     void Awake()
     {
@@ -50,8 +52,8 @@ public class GameManager : MonoBehaviour
         speedMax10 = 4.2f;
         speedMin20 = 4.375f;
         speedMax20 = 5.25f;
-        speedMin50 = 8.75f;
-        speedMax50 = 10.5f;
+        speedMin50 = 6f;
+        speedMax50 = 7f;
         distMin10 = 45;
         distMax10 = 35;
         distMin20 = 90;
@@ -240,7 +242,6 @@ public class GameManager : MonoBehaviour
             {"#44FE4A", "#E1E833", "#FFC738", "#38EBD0"},    //green
             {"#FFD94B", "#E88838", "#FF433D", "#BEEB3D"},    //yellow
             {"#A64812", "#F2913D", "#D97925", "#F2913D"},     //orange
-            {"#91D7F2", "#03A688", "#A3C1C9", "#F2F2F2"},
             {"#BF7839", "#F23005", "#F2D338", "#3C3F40"},
             {"#F20505", "#D9D0C1", "#8A00E5", "#63BBF2"},
             {"#D9AA52", "#FAF4EA", "#0D0D0D", "#B2B6B8"},
@@ -254,8 +255,6 @@ public class GameManager : MonoBehaviour
             {"#F26D78", "#656D73", "#048ABF", "#827CA6"},
             {"#0D0D0D", "#F2E205", "#84BF04", "#F23005"},
             {"#155259", "#BFD9D9", "#012326", "#F2F2F2"},
-            {"#101C26", "#000000", "#2A4359", "#99D9F2"},
-            {"#070C0D", "#14261B", "#225459", "#80ADBF"},
             {"#2F3973", "#F2F2F2", "#2F3973", "#111826"},
             {"#BF6586", "#F2C4C4", "#F2AD94", "#73364C"},
             {"#BF7636", "#7787A6", "#733E1F", "#D9B6A3"},
