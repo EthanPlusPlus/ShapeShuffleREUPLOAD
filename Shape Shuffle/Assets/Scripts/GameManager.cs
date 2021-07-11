@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {   
     CameraManager cm;
     WallManager wm;
+    SceneManager sceneManager;
 
     public GameObject[] shps;
     public ParticleSystem[] psConfetti;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         cm = (CameraManager)FindObjectOfType(typeof(CameraManager));
         wm = (WallManager)FindObjectOfType(typeof(WallManager));
+        sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
     }
 
     void Start()

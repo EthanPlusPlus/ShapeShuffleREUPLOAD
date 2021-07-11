@@ -101,10 +101,10 @@ public class ShapeMovement : MonoBehaviour
         if(gm.swipeInput){
             swipeCooldn += Time.deltaTime;
 
-            if(swipeCooldn < 0.1f)
-                return;
+            //if(swipeCooldn < 0.1f)
+               // return;
 
-            if(Input.touchCount > 0){
+            if(Input.touchCount == 1){
 
                     Touch t = Input.GetTouch(0);
                     if(t.phase == TouchPhase.Began){
@@ -199,8 +199,8 @@ public class ShapeMovement : MonoBehaviour
 
                 tapCooldn += Time.deltaTime;
 
-                if(tapCooldn < 0.1f)
-                    return;
+                //if(tapCooldn < 0.1f)
+                    //return;
 
                 Touch t = Input.GetTouch(0);
                 if(t.phase == TouchPhase.Began){

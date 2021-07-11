@@ -7,14 +7,14 @@ public class WallManager : MonoBehaviour
     GameManager gm;
     ShapeMovement shapeMovement;
 
-    public List<GameObject> wallShps = new List<GameObject>();
+    public List<GameObject> wallShps = new List<GameObject>();  //temp
     public List<GameObject> sortedWallShps = new List<GameObject>();
     public List<GameObject> correctWalls = new List<GameObject>();
     public List<GameObject> totalWalls = new List<GameObject>();
     
     List<GameObject> leftWalls = new List<GameObject>();
     
-    public GameObject[] walls;
+    public GameObject[] walls;  //main
     GameObject startRoadPos;
     GameObject wallParent;
     GameObject correctWall, wallParentClean;
@@ -287,6 +287,7 @@ public class WallManager : MonoBehaviour
 
     public void WallExit(GameObject wallPassed)
     {
+        wallPassed.GetComponent<AudioSource>().Play();
         wallPassed.LeanMoveX(-10, 3);
     }
 

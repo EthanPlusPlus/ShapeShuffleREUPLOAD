@@ -27,10 +27,9 @@ public class SceneManager : MonoBehaviour
     void Start()
     {
         //PlayerPrefs.DeleteKey("Level");
-        
+
         levelTxt.text = PlayerPrefs.GetInt("Level", 1).ToString();
         gm.swipeInput = (bool)(PlayerPrefs.GetInt("InputType", 1) == 1);
-        print(gm.swipeInput);
         UpdateInput();
     }
 
@@ -61,6 +60,7 @@ public class SceneManager : MonoBehaviour
         for (int i = 0; i < gm.shpCount; i++)
         {
             sms[i].enabled = true;
+            gm.currShps[i].transform.SetParent(null);
         }
         cm.enabled = true;
 
