@@ -81,7 +81,7 @@ public class ShapeMovement : MonoBehaviour
 
         }else{                              //slow down
             accel = false;
-            r.AddForce(-xVec * gm.speed * 3f * gm.speedPhone, yVec * gm.speed * 3f * gm.speedPhone, 0);
+            r.AddForce(-xVec * gm.speed * 3f * gm.speedPhone, yVec * gm.speed * 3 * gm.speedPhone, 0);
 
         }
     }
@@ -194,7 +194,32 @@ public class ShapeMovement : MonoBehaviour
             }
         }
         else{
-            //key press input
+
+            if(Input.GetKeyDown(KeyCode.A)){
+                    if(lMoves > 0){          //shapePos.z < 1.75f * ((gm.laneNum -1) / 2)
+                        shapePos.z = shapePos.z + 2.75f;
+                        LeanTween.cancel(gameObject);
+                        LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
+                        // transform.position = shapePos;
+                        --lMoves;
+                        ++rMoves;
+                        --currentLane;
+                        if(tempRTap)
+                            tapCooldn = 0;
+                    }
+                }else if(Input.GetKeyDown(KeyCode.D)){
+                    if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
+                        shapePos.z = shapePos.z - 2.75f;
+                        LeanTween.cancel(gameObject);
+                        LeanTween.moveZ(gameObject, shapePos.z, 0.1f).setEaseOutBack();
+                        //transform.position = shapePos;
+                        ++lMoves;
+                        --rMoves;
+                        ++currentLane;
+                        if(!tempRTap)
+                            tapCooldn = 0;
+                    }
+                }
             if(Input.touchCount > 0){
 
                 tapCooldn += Time.deltaTime;

@@ -72,7 +72,7 @@ public class SceneManager : MonoBehaviour
         if(gm.won){ 
             completedTxt.enabled = true;
 
-            Invoke("LoadNextSccene", 3);
+            Invoke("LoadNextSccene", 5);
             
         }
     }

@@ -115,19 +115,33 @@ public class CameraManager : MonoBehaviour
                 
                 List<GameObject> tw = new List<GameObject>();
                 tw = wm.totalWalls;
+                Vector3 lastWallPos = tw[tw.Count-1].transform.position;
                 ParticleSystem[] con = gm.psConfetti;
 
                 for (int i = 0; i < 3; i++)
                 {
-                    con[i].gameObject.transform.position = tw[tw.Count-1].transform.position;
-                    con[i].Play();
+                    RandomiseFireworkPos(con[i].gameObject, lastWallPos);
+                    //con[i].gameObject.transform.position = new Vector3(lastWallPos.x + Random.Range(50, 70), lastWallPos.y + Random.Range(30, 40));
+                    //con[i].Play();
+                    StartCoroutine(PlayFireworks(con[i]));
                 }
-                tw[tw.Count-1].SetActive(false);
+                //tw[tw.Count-1].SetActive(false);
                 startRecorded = true;
             }            
 
-            ZoomOut(25, 60);
+            ZoomOut(30, 65);
 
         }
+    }
+
+    void RandomiseFireworkPos(GameObject ps, Vector3 lastWallPos)
+    {
+        ps.transform.position = new Vector3(lastWallPos.x + Random.Range(50, 100), lastWallPos.y + Random.Range(30, 40), lastWallPos.z + Random.Range(-80, 80));
+    }
+
+    IEnumerator PlayFireworks(ParticleSystem ps)
+    {
+        yield return new WaitForSeconds(2);
+        ps.Play();
     }
 }
