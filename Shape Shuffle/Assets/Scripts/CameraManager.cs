@@ -125,8 +125,13 @@ public class CameraManager : MonoBehaviour
                     //con[i].Play();
                     StartCoroutine(PlayFireworks(con[i]));
                 }
-                con[3].gameObject.transform.position = tw[tw.Count-1].transform.position;
-                con[3].Play();
+
+                for (int i = 3; i < 6; i++)
+                {
+                    con[i].gameObject.transform.position = tw[tw.Count-1].transform.position;
+                    con[i].Play();                
+                }
+    
                 //tw[tw.Count-1].SetActive(false);
                 startRecorded = true;
             }            
