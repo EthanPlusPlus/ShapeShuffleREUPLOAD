@@ -130,13 +130,14 @@ public class CameraManager : MonoBehaviour
                 {
                     con[i].gameObject.transform.position = tw[tw.Count-1].transform.position;
                     con[i].Play();                
+                    //StartCoroutine(PlayFireworks(con[i]));
                 }
     
                 //tw[tw.Count-1].SetActive(false);
                 startRecorded = true;
             }            
 
-            ZoomOut(30, 65);
+            ZoomOut(33, 65);
 
         }
     }
