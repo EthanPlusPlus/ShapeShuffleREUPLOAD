@@ -228,11 +228,11 @@ public class ShapeMovement : MonoBehaviour
                 //if(tapCooldn < 0.1f)
                     //return;
 
-                if(tapCooldn){
+                if(!tapCooldn){
                     return;
                 }
 
-                SpamTap();
+                StartCoroutine(SpamTap());
 
                 Touch t = Input.GetTouch(0);
                 if(t.phase == TouchPhase.Began){

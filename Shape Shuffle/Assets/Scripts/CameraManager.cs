@@ -45,21 +45,21 @@ public class CameraManager : MonoBehaviour
 
     public void CamMove()
     {
-        
+        transform.position = new Vector2(gm.currShps[0].transform.position.x, gm.currShps[0].transform.position.y);
 
-        xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
-        yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
+        // xVec = Mathf.Sin(1.308997f);             //75 * (Mathf.PI/180)
+        // yVec = Mathf.Cos(1.308997f);             //75 * (Mathf.PI/180)
 
-        if(sm.currentWall == 0){
-            //camR.AddForce(xVec * gm.speed * gm.speedPhone, -yVec * gm.speed * gm.speedPhone, 0);
-            camR.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);
-        }
-        else if(sm.accel){
-            camR.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);
-        }
-        else{
-            camR.AddForce(-xVec * gm.speed * 3f * gm.speedPhone, yVec * gm.speed * 3 * gm.speedPhone, 0);
-        }
+        // if(sm.currentWall == 0){
+        //     //camR.AddForce(xVec * gm.speed * gm.speedPhone, -yVec * gm.speed * gm.speedPhone, 0);
+        //     camR.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);
+        // }
+        // else if(sm.accel){
+        //     camR.AddForce(xVec * gm.speed * 0.9f * gm.speedPhone, -yVec * gm.speed * 0.9f * gm.speedPhone, 0);
+        // }
+        // else{
+        //     camR.AddForce(-xVec * gm.speed * 3f * gm.speedPhone, yVec * gm.speed * 3 * gm.speedPhone, 0);
+        // }
     }
 
     void ZoomOut(float speed, float distOffset)
