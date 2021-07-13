@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
 
     WallManager wm;
     GameManager gm;
+    CameraManager cm;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class AudioManager : MonoBehaviour
     {
         wm = (WallManager)FindObjectOfType(typeof(WallManager));
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
+        cm = (CameraManager)FindObjectOfType(typeof(CameraManager));
 
         foreach(_Sounds s in sounds)
         {
@@ -35,6 +37,17 @@ public class AudioManager : MonoBehaviour
                     s.source.pitch = s.pitch;
                 }
             }
+
+            if(s.name == "wallCrash"){
+                s.source = cm.gameObject.AddComponent<AudioSource>();
+
+                s.source.clip = s.clip;
+                s.source.playOnAwake = s.playWhenAwake;
+                
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+            }
+            
         }
     }
 

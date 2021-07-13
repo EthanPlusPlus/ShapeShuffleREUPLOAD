@@ -21008,6 +21008,12 @@ MonoBehaviour:
     pitch: 1
     playWhenAwake: 0
     source: {fileID: 0}
+  - name: wallCrash
+    clip: {fileID: 8300000, guid: 9f2beb005e5660c4c9089d82097429aa, type: 3}
+    volume: 0.436
+    pitch: 0.67
+    playWhenAwake: 0
+    source: {fileID: 0}
 --- !u!4 &1479352198
 Transform:
   m_ObjectHideFlags: 0

@@ -348,9 +348,11 @@ public class ShapeMovement : MonoBehaviour
             
         tr = GetComponent<TrailRenderer>();
         
-        if(gm.won)
-            tr.enabled = false;
-        
+        if(gm.won){
+            //tr.enabled = false;
+            gameObject.SetActive(false);
+        }
+
         if(accel){
             if(tr.time < 0.42f * gm.levelNum*0.5f)
                 tr.time += 0.001f;

@@ -97,6 +97,7 @@ public class CameraManager : MonoBehaviour
                 camR.AddForce(xVec * -gm.speed * gm.speedPhone, yVec * gm.speed * gm.speedPhone, 0);
                 zoomGo.transform.SetParent(null);
 
+                gameObject.GetComponent<AudioSource>().Play();
                 StartCoroutine(Shake());
 
                 startRecorded = true;
