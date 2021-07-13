@@ -11,7 +11,7 @@ public class ShapeMovement : MonoBehaviour
     public float xVec, yVec;
     float startTime;
     float swipeCooldn = 0.2f;
-    float tapCooldn = 0.2f;
+    //float tapCooldn = 0.2f;
 
     public int lMoves, rMoves;
     public int currentLane, currentWall;
@@ -24,6 +24,7 @@ public class ShapeMovement : MonoBehaviour
     public bool clicked, leftSwiped, rightSwiped, tempRSwipe, tempRTap;
     public bool correctLane;
     public bool accel;
+    bool tapCooldn = true;
 
     public GameObject touchTemp;
 
@@ -204,8 +205,8 @@ public class ShapeMovement : MonoBehaviour
                         --lMoves;
                         ++rMoves;
                         --currentLane;
-                        if(tempRTap)
-                            tapCooldn = 0;
+                        // if(tempRTap)
+                        //     tapCooldn = 0;
                     }
                 }else if(Input.GetKeyDown(KeyCode.D)){
                     if(rMoves > 0){       //shapePos.z > -1.75f * ((gm.laneNum -1) / 2
@@ -216,16 +217,22 @@ public class ShapeMovement : MonoBehaviour
                         ++lMoves;
                         --rMoves;
                         ++currentLane;
-                        if(!tempRTap)
-                            tapCooldn = 0;
+                        // if(!tempRTap)
+                        //     tapCooldn = 0;
                     }
                 }
             if(Input.touchCount > 0){
 
-                tapCooldn += Time.deltaTime;
+                //tapCooldn += Time.deltaTime;
 
                 //if(tapCooldn < 0.1f)
                     //return;
+
+                if(tapCooldn){
+                    return;
+                }
+
+                SpamTap();
 
                 Touch t = Input.GetTouch(0);
                 if(t.phase == TouchPhase.Began){
@@ -240,8 +247,8 @@ public class ShapeMovement : MonoBehaviour
                             --lMoves;
                             ++rMoves;
                             --currentLane;
-                            if(tempRTap)
-                                tapCooldn = 0;
+                            // if(tempRTap)
+                            //     tapCooldn = 0;
                         }
                     }else if(t.position.x > Screen.width/2){  //rigjt side
 
@@ -253,20 +260,23 @@ public class ShapeMovement : MonoBehaviour
                             ++lMoves;
                             --rMoves;
                             ++currentLane;
-                            if(!tempRTap)
-                                tapCooldn = 0;
+                            // if(!tempRTap)
+                            //     tapCooldn = 0;
                         }
                     }
                 
                 }
             }
-                
-            
-    
-                
-            
         }
     }
+
+    IEnumerator SpamTap()
+    {
+        tapCooldn = false;
+        yield return new WaitForSeconds(0.1f);
+        tapCooldn = true;
+    }
+
 
     IEnumerator Test()
     {
@@ -337,6 +347,9 @@ public class ShapeMovement : MonoBehaviour
         TrailRenderer tr;
             
         tr = GetComponent<TrailRenderer>();
+        
+        if(gm.won)
+            tr.enabled = false;
         
         if(accel){
             if(tr.time < 0.42f * gm.levelNum*0.5f)
