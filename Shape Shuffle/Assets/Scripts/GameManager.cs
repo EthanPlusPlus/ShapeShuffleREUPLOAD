@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     CameraManager cm;
     WallManager wm;
     SceneManager sceneManager;
+    AdManager adm;
 
     public GameObject[] shps;
     public ParticleSystem[] psConfetti;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     public float speed, dist;         //output this
 
     public bool lost, won;
+    bool adShown = true;
     public bool allShpCorrect;
     public bool swipeInput = true;
     public bool showSettings = true;
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
         cm = (CameraManager)FindObjectOfType(typeof(CameraManager));
         wm = (WallManager)FindObjectOfType(typeof(WallManager));
         sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
+        adm = (AdManager)FindObjectOfType(typeof(AdManager));
     }
 
     void Start()
@@ -66,11 +69,14 @@ public class GameManager : MonoBehaviour
 
         ChooseMesh();
         //Invoke("ColourSet", 1);
+
+        adm.RequestInterstitial();
     }
 
     void Update()
     {
         CheckShapes();
+        StartCoroutine(Ads());
     }
 
     void Difficulty()
@@ -197,6 +203,16 @@ public class GameManager : MonoBehaviour
            allShpCorrect = true; 
         }else{
             allShpCorrect = false;
+        }
+    }
+
+    IEnumerator Ads()
+    {
+        if(lost && adShown){
+            yield return new WaitForSeconds(2.5f);
+            
+            adm.ShowInterstitial();
+            adShown = false;
         }
     }
 
