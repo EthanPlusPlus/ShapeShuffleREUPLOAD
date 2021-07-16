@@ -8,6 +8,9 @@ public class AdManager : MonoBehaviour
 {
     InterstitialAd interstitial;
     string interstitialId;
+
+    bool playAdChance, choseChanceTemp;
+
     void Start()
     {
         MobileAds.Initialize(initStatus => { });
@@ -51,11 +54,25 @@ public class AdManager : MonoBehaviour
     //show the ad
     public void ShowInterstitial()
     {
+        AdChance();
+        if(!playAdChance){ return; }
+
         if (interstitial.IsLoaded())
         {
             interstitial.Show();
             print("shw ME");
         }
+    }
+
+    void AdChance()
+    {
+        if(UnityEngine.Random.Range(0, 4) == 1 && !choseChanceTemp){
+        
+            playAdChance = true;
+            
+        }
+        
+        choseChanceTemp = true;
     }
 
 
