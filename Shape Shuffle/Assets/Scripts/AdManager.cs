@@ -6,24 +6,25 @@ using System;
 
 public class AdManager : MonoBehaviour
 {
-   InterstitialAd interstitial;
+    InterstitialAd interstitial;
     string interstitialId;
     void Start()
     {
+        MobileAds.Initialize(initStatus => { });
         RequestInterstitial();
     }
 
     public void RequestInterstitial()
     {
 
-#if UNITY_ANDROID
-        interstitialId = "ca-app-pub-1502780880043579/5060735624";
-#elif UNITY_IPHONE
-        interstitialId = "ca-app-pub-1502780880043579/5060735624";
-#else
-        interstitialId = null;
-#endif
-        interstitial = new InterstitialAd(interstitialId);
+        #if UNITY_ANDROID
+            interstitialId = "ca-app-pub-1502780880043579/5060735624";
+        #elif UNITY_IPHONE
+            interstitialId = "ca-app-pub-1502780880043579/5060735624";
+        #else
+            interstitialId = null;
+        #endif
+            interstitial = new InterstitialAd(interstitialId);
 
         //call events
         interstitial.OnAdLoaded += HandleOnAdLoaded;
@@ -32,17 +33,19 @@ public class AdManager : MonoBehaviour
         interstitial.OnAdClosed += HandleOnAdClosed;
         //interstitial.OnAdLeavingApplication += HandleOnAdLeavingApplication;
 
+        AdRequest request = new AdRequest.Builder().Build();
+        interstitial.LoadAd(request); //load & show the banner ad
 
         //create and ad request
-        if (PlayerPrefs.HasKey("Consent"))
-        {
-            AdRequest request = new AdRequest.Builder().Build();
-            interstitial.LoadAd(request); //load & show the banner ad
-        } else
-        {
-            AdRequest request = new AdRequest.Builder().AddExtra("npa", "1").Build();
-            interstitial.LoadAd(request); //load & show the banner ad (non-personalised)
-        }
+        // if (PlayerPrefs.HasKey("Consent"))
+        // {
+        //     AdRequest request = new AdRequest.Builder().Build();
+        //     interstitial.LoadAd(request); //load & show the banner ad
+        // } else
+        // {
+        //     AdRequest request = new AdRequest.Builder().AddExtra("npa", "1").Build();
+        //     interstitial.LoadAd(request); //load & show the banner ad (non-personalised)
+        // }
     }
 
     //show the ad
@@ -51,6 +54,7 @@ public class AdManager : MonoBehaviour
         if (interstitial.IsLoaded())
         {
             interstitial.Show();
+            print("shw ME");
         }
     }
 
