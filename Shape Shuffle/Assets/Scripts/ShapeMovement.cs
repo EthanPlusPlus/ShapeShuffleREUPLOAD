@@ -7,6 +7,7 @@ public class ShapeMovement : MonoBehaviour
 {
     GameManager gm;
     WallManager wm;
+    SceneManager scm;
 
     public float xVec, yVec;
     float startTime;
@@ -35,6 +36,7 @@ public class ShapeMovement : MonoBehaviour
     {
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
         wm = (WallManager)FindObjectOfType(typeof(WallManager));
+        scm = (SceneManager)FindObjectOfType(typeof(SceneManager));
 
         touchTemp = GameObject.FindGameObjectWithTag("mouseTemp");
 
@@ -292,6 +294,9 @@ public class ShapeMovement : MonoBehaviour
 
     void LaneDetect()
     {
+        if(scm.paused)
+            return;
+
         if(currentWall >= gm.wallNum){
             gm.won = true;
             if(transform.childCount == 0){

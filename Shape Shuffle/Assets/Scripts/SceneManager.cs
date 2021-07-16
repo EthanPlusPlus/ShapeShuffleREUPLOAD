@@ -13,12 +13,15 @@ public class SceneManager : MonoBehaviour
     [SerializeField] ShapeMovement[] sms;
 
     [SerializeField] Canvas mainCan;
-    [SerializeField] Text completedTxt, levelTxt, tap2playTxt, swipeTxt, tapTxt;
-    [SerializeField] Button inputBtn;
+    [SerializeField] Text completedTxt, levelTxt, tap2playTxt;
+    [SerializeField] Image tapImg, swipeImg;
+    [SerializeField] Image dimPanel, pauseImg, unpauseImg;
+    public Button inputBtn, pauseBtn;
 
     bool playGame;
     bool runOnce = false;
- 
+    public bool paused;
+
     void Awake()
     {
         //PlayerPrefs.SetInt("Level", gm.levelNum);
@@ -29,7 +32,7 @@ public class SceneManager : MonoBehaviour
         //PlayerPrefs.DeleteKey("Level");
 
         levelTxt.text = PlayerPrefs.GetInt("Level", 1).ToString();
-        gm.swipeInput = (bool)(PlayerPrefs.GetInt("InputType", 1) == 1);
+        gm.swipeInput = (bool)(PlayerPrefs.GetInt("InputType", 0) == 1);
         UpdateInput();
     }
 
@@ -44,6 +47,25 @@ public class SceneManager : MonoBehaviour
 
             OnWon();        //check won
             OnLost();
+        }
+    
+        UpdatePause();
+    }
+
+    public void Pause()
+    {
+        for (int i = 0; i < sms.Length; i++)
+        {
+            if(!paused){    //pause
+
+                paused = true;
+                Time.timeScale = 0;
+                
+            }else{          //unpause
+
+                paused = false;
+                Time.timeScale = 1;
+            }
         }
     }
 
@@ -128,12 +150,12 @@ public class SceneManager : MonoBehaviour
     public void SwitchInput()
     {
         if(gm.swipeInput){
-            swipeTxt.enabled = false;
-            tapTxt.enabled = true;
+            swipeImg.enabled = false;
+            tapImg.enabled = true;
             gm.swipeInput = false;
         }else{
-            swipeTxt.enabled = true;
-            tapTxt.enabled = false;
+            swipeImg.enabled = true;
+            tapImg.enabled = false;
             gm.swipeInput = true;
         }
 
@@ -143,11 +165,25 @@ public class SceneManager : MonoBehaviour
     void UpdateInput()
     {
         if(gm.swipeInput){
-            swipeTxt.enabled = true;
-            tapTxt.enabled = false;
+            swipeImg.enabled = true;
+            tapImg.enabled = false;
         }else{
-            swipeTxt.enabled = false;
-            tapTxt.enabled = true;
+            swipeImg.enabled = false;
+            tapImg.enabled = true;
         }
+    }
+
+    void UpdatePause()
+    {
+        if(paused){
+            pauseImg.enabled = true;
+            unpauseImg.enabled = false;
+            dimPanel.enabled = true;
+        }else{
+            pauseImg.enabled = false;
+            unpauseImg.enabled = true;
+            dimPanel.enabled = false;
+        }
+
     }
 }

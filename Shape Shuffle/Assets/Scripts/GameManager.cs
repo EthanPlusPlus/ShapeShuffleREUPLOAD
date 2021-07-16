@@ -214,6 +214,13 @@ public class GameManager : MonoBehaviour
             adm.ShowInterstitial();
             adShown = false;
         }
+
+        if(won && adShown){
+            yield return new WaitForSeconds(4.5f);
+
+            adm.ShowInterstitial();
+            adShown = false;
+        }
     }
 
     Quaternion Rotate(int shpNum)       //for shapes
@@ -256,7 +263,7 @@ public class GameManager : MonoBehaviour
     {
         colourPal = new string[,] { //road, shape, wall, bg
             {"#FF6969", "#EB9C59", "#FFEFAB", "#BA54E8"},   //red (default)
-            {"#5ABAFF", "#684BEB", "#46E8AC", "#75FF4D"},   //light blue
+            //{"#5ABAFF", "#684BEB", "#46E8AC", "#75FF4D"},   //light blue
             {"#44FE4A", "#E1E833", "#FFC738", "#38EBD0"},    //green
             {"#FFD94B", "#E88838", "#FF433D", "#BEEB3D"},    //yellow
             {"#A64812", "#F2913D", "#D97925", "#F2913D"},     //orange

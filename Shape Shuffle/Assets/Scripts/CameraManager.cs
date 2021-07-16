@@ -6,6 +6,7 @@ public class CameraManager : MonoBehaviour
 {
     GameManager gm;
     WallManager wm;
+    SceneManager scm;
     [HideInInspector] public ShapeMovement sm;
 
     Rigidbody camR;
@@ -28,6 +29,7 @@ public class CameraManager : MonoBehaviour
     {
         gm = (GameManager)FindObjectOfType(typeof(GameManager));
         wm = (WallManager)FindObjectOfType(typeof(WallManager));
+        scm = (SceneManager)FindObjectOfType(typeof(SceneManager));
         //sm = gm.currShps[0].gameObject.GetComponent<ShapeMovement>();
 
         camR = GetComponent<Rigidbody>();
@@ -102,6 +104,8 @@ public class CameraManager : MonoBehaviour
 
                 startRecorded = true;
             }
+
+            scm.pauseBtn.gameObject.SetActive(false);
             
             ZoomOut(12, 0);
         }
@@ -137,6 +141,8 @@ public class CameraManager : MonoBehaviour
                 //tw[tw.Count-1].SetActive(false);
                 startRecorded = true;
             }            
+
+            scm.pauseBtn.gameObject.SetActive(false);
 
             ZoomOut(33, 65);
 
