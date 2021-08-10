@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "333a4918",
         "name": "com.Ledge.ShapeShuffle",
-        "processId": 6461,
+        "processId": 4093,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -18,6 +18,12 @@
             "deviceId": "333a4918",
             "name": "com.Ledge.ShapeShuffle",
             "processId": 6461,
+            "exited": false
+        },
+        {
+            "deviceId": "333a4918",
+            "name": "com.Ledge.ShapeShuffle",
+            "processId": 4093,
             "exited": false
         }
     ],

@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         distMin20 = 90;
         distMax20 = 70;
         distMin50 = 85; //20
-        distMax50 = 65; //10
+        distMax50 = 70; //10
         Difficulty();
 
         ChooseMesh();
