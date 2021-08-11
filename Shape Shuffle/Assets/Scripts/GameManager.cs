@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     WallManager wm;
     SceneManager sceneManager;
     AdManager adm;
+    LeaderBoard lb;
 
     public GameObject[] shps;
     public ParticleSystem[] psConfetti;
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
         wm = (WallManager)FindObjectOfType(typeof(WallManager));
         sceneManager = (SceneManager)FindObjectOfType(typeof(SceneManager));
         adm = (AdManager)FindObjectOfType(typeof(AdManager));
+        lb = (LeaderBoard)FindObjectOfType(typeof(LeaderBoard));
     }
 
     void Start()
@@ -69,6 +71,8 @@ public class GameManager : MonoBehaviour
 
         ChooseMesh();
         //Invoke("ColourSet", 1);
+
+        lb.SubmitLevel(levelNum);
 
         adm.RequestInterstitial();
     }

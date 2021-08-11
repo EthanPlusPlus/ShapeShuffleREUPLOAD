@@ -6,10 +6,21 @@ using UnityEngine;
 public class LeaderBoard : MonoBehaviour
 {
 
+    SceneManager sm;
+
     public int levelLbId;
+
+    void Awake()
+    {
+        if(!PlayerPrefs.HasKey("PlayerID")){
+            PlayerPrefs.SetString("PlayerID", GenMemberID());
+        }
+    }
 
     void Start()
     {
+        sm = (SceneManager)FindObjectOfType(typeof(SceneManager));
+
         LootLockerSDKManager.StartSession("Player", (response) =>
         {    
         
@@ -24,7 +35,7 @@ public class LeaderBoard : MonoBehaviour
             }
         });
 
-        SubmitScore();
+    
     }
 
     
@@ -33,9 +44,30 @@ public class LeaderBoard : MonoBehaviour
         
     }
 
-    public void SubmitScore()
+    public void ShowScores()
     {
-        LootLockerSDKManager.SubmitScore(GenMemberID(), 10, levelLbId, (response) =>
+        LootLockerSDKManager.GetScoreList(levelLbId, 10, (response) => 
+        {
+            if(response.success){
+
+                LootLocker.Requests.LootLockerLeaderboardMember[] levels = response.items;
+
+                for (int i = 0; i < levels.Length; i++)
+                {
+                    sm.levelLbNames[i].text = levels[i].rank + ". " + levels[i].score;
+                }
+
+            }else{
+
+                print("n");
+
+            }
+        });
+    }
+
+    public void SubmitLevel(int levelNum)
+    {
+        LootLockerSDKManager.SubmitScore(PlayerPrefs.GetString("PlayerID", "000000"), levelNum, levelLbId, (response) =>
         {
             if(response.success){
 
