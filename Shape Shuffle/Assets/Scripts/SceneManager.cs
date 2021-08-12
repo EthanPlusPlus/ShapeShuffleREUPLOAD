@@ -16,6 +16,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField] Text completedTxt, levelTxt, tap2playTxt;
     [SerializeField] Image tapImg, swipeImg;
     [SerializeField] Image dimPanel, pauseImg, unpauseImg;
+    [SerializeField] InputField nameInpt;
     public Text[] levelLbNames;
     public Button inputBtn, pauseBtn;
 
